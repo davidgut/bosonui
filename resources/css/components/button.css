@@ -93,6 +93,14 @@
     --btn-danger-hover-bg: color-mix(in srgb, var(--color-red-500), transparent 10%);
     --btn-danger-hover-text: var(--color-white);
     --btn-danger-shadow: none;
+
+    /* Danger Soft Variant */
+    --btn-danger-soft-bg: var(--color-red-50);
+    --btn-danger-soft-text: var(--color-red-600);
+    --btn-danger-soft-border: transparent;
+    --btn-danger-soft-hover-bg: var(--color-red-100);
+    --btn-danger-soft-hover-text: var(--color-red-700);
+    --btn-danger-soft-shadow: none;
 }
 
 @layer components {
@@ -228,5 +236,14 @@
         --btn-hover-bg: var(--btn-danger-hover-bg);
         --btn-hover-text: var(--btn-danger-hover-text);
         --btn-shadow: var(--btn-danger-shadow);
+    }
+
+    .btn-danger-soft {
+        --btn-bg: var(--btn-danger-soft-bg);
+        --btn-text: var(--btn-danger-soft-text);
+        --btn-border: var(--btn-danger-soft-border);
+        --btn-hover-bg: var(--btn-danger-soft-hover-bg);
+        --btn-hover-text: var(--btn-danger-soft-hover-text);
+        --btn-shadow: var(--btn-danger-soft-shadow);
     }
 }

@@ -1,6 +1,6 @@
 {{-- 
-@description Button. Set variant="primary|danger|ghost|..." and size="sm|lg|...". Add icon="name" for leading icon, icon:trailing="name" for trailing. Use square for icon-only buttons.
-@variants default, primary, secondary, outline, ghost, subtle, danger
+@description Button. Set variant="primary|danger|ghost|..." and size="sm|lg|...". Add icon="name" for leading icon, icon:trailing="name" for trailing. Use square for icon-only buttons. The default variant is used automatically when no variant prop is passed, so variant="default" is not needed.
+@variants default, primary, secondary, outline, ghost, subtle, danger, danger-soft
 @sizes xs, sm, md, lg, xl
 @usage <x-boson::button variant="primary" icon="check">Save</x-boson::button>
 --}}
