@@ -1,0 +1,94 @@
+@theme {
+    /* Table */
+    --table-bg: var(--color-white);
+    --table-text: var(--color-gray-900);
+    --table-border: var(--color-gray-200);
+    --table-row-hover-bg: var(--color-gray-50);
+
+    /* Header */
+    --table-header-bg: var(--color-white);
+    --table-header-text: var(--color-gray-500);
+    --table-header-border: var(--color-gray-200);
+
+    /* Cell Padding */
+    --table-cell-px: calc(var(--spacing) * 4);
+    --table-cell-py: calc(var(--spacing) * 2);
+}
+
+@layer components {
+    .table-container {
+        @apply w-full overflow-auto relative border rounded-lg shadow-sm;
+        border-color: var(--table-border);
+        background-color: var(--table-bg);
+        max-height: 80vh;
+    }
+
+    .table {
+        @apply w-full caption-bottom text-sm text-left border-collapse;
+        color: var(--table-text);
+    }
+
+    .table-head {
+        @apply sticky top-0 z-10;
+        background-color: var(--table-header-bg);
+    }
+
+    .table-body {
+        @apply [&_tr:last-child]:border-0;
+    }
+
+    .table-row {
+        @apply border-b transition-colors;
+        border-bottom-color: var(--table-border);
+        background-color: var(--table-bg);
+    }
+
+    .table-hover .table-row:hover {
+        background-color: var(--table-row-hover-bg);
+    }
+
+    .table-header {
+        @apply h-10 align-middle font-medium border-b whitespace-nowrap;
+        padding: var(--table-cell-py) var(--table-cell-px);
+        background-color: var(--table-header-bg);
+        color: var(--table-header-text);
+        border-bottom-color: var(--table-header-border);
+    }
+
+    .table-data {
+        @apply align-middle whitespace-nowrap;
+        padding: var(--table-cell-py) var(--table-cell-px);
+        color: var(--table-text);
+    }
+    
+    /* Vertical Borders / Grid Style (Optional but common in Attio) */
+    .table-bordered .table-header,
+    .table-bordered .table-data {
+        @apply border-r last:border-r-0;
+        border-right-color: var(--table-border);
+    }
+
+    /* First column sticky (optional, good for data tables) */
+    .table-sticky-first .table-header:first-child,
+    .table-sticky-first .table-data:first-child {
+        @apply sticky left-0 z-20 border-r;
+        background-color: inherit; /* Matches row/header bg */
+        border-right-color: var(--table-border);
+    }
+
+    /* Striped */
+    .table-striped .table-body tr:nth-child(even) {
+        background-color: var(--table-row-hover-bg);
+    }
+
+    /* Sizes */
+    .table-sm .table-header,
+    .table-sm .table-data {
+        @apply p-2;
+    }
+
+    .table-lg .table-header,
+    .table-lg .table-data {
+        @apply p-6;
+    }
+}

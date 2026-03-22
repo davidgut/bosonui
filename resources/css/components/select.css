@@ -1,0 +1,224 @@
+@theme {
+    /* Select Base (references form control tokens) */
+    --select-bg: var(--form-control-bg);
+    --select-text: var(--form-control-text);
+    --select-border: var(--form-control-border);
+    --select-radius: var(--form-control-radius);
+    --select-placeholder: var(--form-control-placeholder);
+    --select-focus-ring: var(--form-control-focus-ring);
+    --select-focus-border: var(--form-control-focus-border);
+
+    /* Size */
+    --select-height: var(--form-control-height);
+    --select-px: var(--form-control-px);
+    --select-font-size: var(--form-control-font-size);
+    --select-weight: var(--form-control-weight);
+
+    /* Listbox */
+    --select-listbox-z-index: 50;
+    --select-listbox-min-width: 220px;
+    --select-listbox-shadow: var(--shadow-lg);
+    --select-listbox-bg: var(--color-white);
+    --select-listbox-border: var(--color-gray-200);
+
+    /* Option */
+    --select-option-px: 12px;
+    --select-option-py: 8px;
+    --select-option-radius: var(--radius-md);
+    --select-option-text: var(--color-gray-700);
+    --select-option-weight: var(--font-weight-medium);
+    --select-option-hover-bg: var(--color-gray-100);
+    --select-option-hover-text: var(--color-gray-900);
+    --select-option-selected-bg: var(--color-accent-50);
+    --select-option-selected-text: var(--color-accent-700);
+}
+
+@layer components {
+    /* Native Select */
+    .select {
+        @apply w-full border transition-colors focus-visible:outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 appearance-none cursor-pointer;
+
+        height: var(--select-height);
+        padding-left: var(--select-px);
+        font-size: var(--select-font-size);
+        font-weight: var(--select-weight);
+        background-color: var(--select-bg);
+        color: var(--select-text);
+        border-color: var(--select-border);
+        border-radius: var(--select-radius);
+
+        /* Chevron icon */
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+
+        @apply placeholder:text-[var(--select-placeholder)] focus-visible:ring-[var(--select-focus-ring)] focus-visible:border-[var(--select-focus-border)];
+    }
+
+    .select option[value=""][disabled] {
+        @apply text-[var(--select-placeholder)];
+    }
+
+    /* Listbox Variant */
+    .select-listbox {
+        @apply relative inline-block w-full;
+    }
+
+    .select-trigger {
+        @apply w-full flex items-center justify-between border transition-colors focus-visible:outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer;
+
+        height: var(--select-height);
+        padding-left: var(--select-px);
+        padding-right: var(--select-px);
+        font-size: var(--select-font-size);
+        font-weight: var(--select-weight);
+        background-color: var(--select-bg);
+        color: var(--select-text);
+        border-color: var(--select-border);
+        border-radius: var(--select-radius);
+
+        @apply focus-visible:ring-[var(--select-focus-ring)] focus-visible:border-[var(--select-focus-border)];
+    }
+
+    .select-trigger[aria-expanded="true"] {
+        @apply ring-3 ring-[var(--select-focus-ring)] border-[var(--select-focus-border)];
+    }
+
+    .select-trigger-text {
+        @apply flex-1 text-left truncate;
+    }
+
+    .select-trigger-text.is-placeholder {
+        @apply text-[var(--select-placeholder)];
+    }
+
+    .select-trigger-icon {
+        @apply size-5 transition-transform duration-200;
+        color: var(--select-placeholder);
+    }
+
+    .select-trigger[aria-expanded="true"] .select-trigger-icon {
+        @apply rotate-180;
+    }
+
+    .select-menu {
+        @apply absolute hidden z-[var(--select-listbox-z-index)] w-full mt-1 rounded-[var(--select-radius)] bg-[var(--select-listbox-bg)] shadow-[var(--select-listbox-shadow)] ring-1 ring-[var(--select-listbox-border)] focus:outline-none max-h-60 overflow-auto;
+    }
+
+    .select-menu.open {
+        @apply block;
+    }
+
+    .select-option {
+        @apply flex w-full items-center gap-2 cursor-pointer;
+        padding: var(--select-option-py) var(--select-option-px);
+        border-radius: var(--select-option-radius);
+        font-size: var(--select-font-size);
+        font-weight: var(--select-option-weight);
+        color: var(--select-option-text);
+    }
+
+    .select-option:hover {
+        background-color: var(--select-option-hover-bg);
+        color: var(--select-option-hover-text);
+    }
+
+    .select-option.is-selected {
+        background-color: var(--select-option-selected-bg);
+        color: var(--select-option-selected-text);
+    }
+
+    .select-option.is-focused {
+        background-color: var(--select-option-hover-bg);
+        color: var(--select-option-hover-text);
+    }
+
+    .select-option-icon {
+        @apply size-4 flex-shrink-0;
+    }
+
+    .select-option-check {
+        @apply size-4 ml-auto opacity-0;
+    }
+
+    .select-option.is-selected .select-option-check {
+        @apply opacity-100;
+    }
+
+    /* Search Input */
+    .select-search-wrapper {
+        @apply relative border-b border-[var(--select-listbox-border)];
+    }
+
+    .select-search-icon {
+        @apply absolute left-3 top-1/2 -translate-y-1/2 size-4 pointer-events-none;
+        color: var(--select-placeholder);
+    }
+
+    .select-search {
+        @apply w-full transition-colors focus:outline-none focus:ring-0 border-0 bg-transparent;
+        height: var(--select-height);
+        font-size: var(--select-font-size);
+        font-weight: var(--select-weight);
+        padding-left: 2.25rem;
+        padding-right: 0.75rem;
+        color: var(--select-text);
+    }
+
+    .select-search::placeholder {
+        color: var(--select-placeholder);
+    }
+
+    /* Content Container (Options + No Results) */
+    .select-content {
+        @apply max-h-48 overflow-auto;
+    }
+
+    /* Add padding only when content has visible options */
+    .select-content:has(.select-option) {
+        @apply p-1;
+    }
+
+    /* Spacing between search and content - only when there are options */
+    .select-search-wrapper + .select-content:has(.select-option) {
+        @apply pt-1;
+    }
+
+    /* No Results */
+    .select-no-results {
+        @apply py-1.5 text-sm text-center;
+        color: var(--select-placeholder);
+    }
+
+    /* Combobox Variant */
+    .select-combobox {
+        @apply relative inline-block w-full;
+    }
+
+    .select-combobox-wrapper {
+        @apply relative flex items-center;
+    }
+
+    .select-combobox-input {
+        @apply w-full border transition-colors focus:outline-none focus:ring-3 disabled:cursor-not-allowed disabled:opacity-50;
+
+        height: var(--select-height);
+        padding-left: var(--select-px);
+        padding-right: 2rem;
+        font-size: var(--select-font-size);
+        font-weight: var(--select-weight);
+        background-color: var(--select-bg);
+        color: var(--select-text);
+        border-color: var(--select-border);
+        border-radius: var(--select-radius);
+
+        @apply placeholder:text-[var(--select-placeholder)] focus:ring-[var(--select-focus-ring)] focus:border-[var(--select-focus-border)];
+    }
+
+    .select-combobox-icon {
+        @apply absolute right-2 size-5 pointer-events-none transition-transform duration-200;
+        color: var(--select-placeholder);
+    }
+}

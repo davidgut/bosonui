@@ -1,0 +1,56 @@
+@theme {
+    /* Img Design Tokens */
+    --img-radius: var(--radius-lg);
+    --img-radius-circle: 9999px;
+}
+
+@layer components {
+    /* Base Image Styles */
+    .img {
+        @apply block max-w-full h-auto;
+    }
+
+    /* Variants */
+    .img-rounded {
+        border-radius: var(--img-radius);
+    }
+
+    .img-circle {
+        border-radius: var(--img-radius-circle);
+        @apply object-cover;
+    }
+
+    /* Sizes */
+    .img-sm {
+        @apply w-16 h-16;
+    }
+
+    .img-md {
+        @apply w-24 h-24;
+    }
+
+    .img-lg {
+        @apply w-32 h-32;
+    }
+
+    .img-xl {
+        @apply w-48 h-48;
+    }
+
+    .img-full {
+        @apply w-full;
+    }
+
+    /* Aspect Ratios */
+    .img-square {
+        @apply aspect-square object-cover;
+    }
+
+    .img-video {
+        @apply aspect-video object-cover;
+    }
+
+    .img-portrait {
+        @apply aspect-3/4 object-cover;
+    }
+}

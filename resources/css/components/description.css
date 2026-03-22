@@ -1,0 +1,9 @@
+@theme {
+    --description-text: var(--color-gray-500);
+}
+
+@layer components {
+    .description {
+        @apply text-sm text-[var(--description-text)];
+    }
+}

@@ -1,0 +1,157 @@
+@theme {
+    --toast-bg: var(--color-white);
+    --toast-border: var(--color-gray-200);
+    --toast-shadow: var(--shadow-md);
+    --toast-radius: var(--radius-xl);
+    --toast-z-index: 100;
+
+    --toast-success-icon-color: var(--color-green-500);
+    --toast-warning-icon-color: var(--color-amber-500);
+    --toast-danger-icon-color: var(--color-red-500);
+}
+
+@layer components {
+    /* Container positions */
+    .toast-container {
+        @apply fixed z-[var(--toast-z-index)] flex flex-col gap-3 p-4 pointer-events-none;
+    }
+
+    .toast-container[data-position="bottom-end"] {
+        @apply bottom-0 right-0 items-end;
+    }
+
+    .toast-container[data-position="bottom-center"] {
+        @apply bottom-0 left-1/2 -translate-x-1/2 items-center;
+    }
+
+    .toast-container[data-position="bottom-start"] {
+        @apply bottom-0 left-0 items-start;
+    }
+
+    .toast-container[data-position="top-end"] {
+        @apply top-0 right-0 items-end;
+    }
+
+    .toast-container[data-position="top-center"] {
+        @apply top-0 left-1/2 -translate-x-1/2 items-center;
+    }
+
+    .toast-container[data-position="top-start"] {
+        @apply top-0 left-0 items-start;
+    }
+
+    /* Toast item - centered by default (text-only) */
+    .toast {
+        @apply pointer-events-auto flex w-full max-w-sm items-center gap-2 rounded-[var(--toast-radius)] border border-[var(--toast-border)] bg-[var(--toast-bg)] p-2 shadow-[var(--toast-shadow)] transition-all duration-300;
+    }
+
+    /* With heading - align to top */
+    .toast:has(.toast-heading) {
+        @apply items-start;
+    }
+
+    /* Toast body - contains icon and content */
+    .toast-body {
+        @apply flex flex-1 items-center gap-2 py-2 pl-2;
+    }
+
+    /* With heading - align body to top */
+    .toast:has(.toast-heading) .toast-body {
+        @apply items-start;
+    }
+
+    /* Toast actions */
+    .toast-actions {
+        @apply flex items-center;
+    }
+
+    /* Bottom positions - slide up */
+    .toast-container[data-position^="bottom"] .toast {
+        animation: toast-enter-bottom 0.3s ease-out;
+    }
+
+    /* Top positions - slide down */
+    .toast-container[data-position^="top"] .toast {
+        animation: toast-enter-top 0.3s ease-out;
+    }
+
+    .toast[data-exiting] {
+        animation: toast-exit 0.3s ease-out forwards;
+    }
+
+    /* Icon */
+    .toast-icon {
+        @apply shrink-0;
+    }
+
+    /* Icon with heading - slight top margin for alignment */
+    .toast:has(.toast-heading) .toast-icon {
+        @apply mt-0.5;
+    }
+
+    .toast[data-variant="success"] .toast-icon {
+        @apply text-[var(--toast-success-icon-color)];
+    }
+
+    .toast[data-variant="warning"] .toast-icon {
+        @apply text-[var(--toast-warning-icon-color)];
+    }
+
+    .toast[data-variant="danger"] .toast-icon {
+        @apply text-[var(--toast-danger-icon-color)];
+    }
+
+    /* Content */
+    .toast-content {
+        @apply flex-1 min-w-0;
+    }
+
+    .toast-heading {
+        @apply text-sm font-medium text-gray-900;
+    }
+
+    /* Text - medium weight by default (no heading) */
+    .toast-text {
+        @apply text-sm text-gray-900 font-medium;
+    }
+
+    /* Text with heading - normal weight */
+    .toast:has(.toast-heading) .toast-text {
+        @apply text-gray-600 font-normal;
+    }
+
+    .toast-heading + .toast-text {
+        @apply mt-0.5;
+    }
+}
+
+@keyframes toast-enter-bottom {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes toast-enter-top {
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes toast-exit {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

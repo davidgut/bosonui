@@ -1,0 +1,10 @@
+@theme {
+    --link-text: var(--color-gray-900);
+    --link-hover-text: var(--color-gray-600);
+}
+
+@layer components {
+    .link {
+        @apply text-[var(--link-text)] underline decoration-inherit underline-offset-4 transition-colors hover:text-[var(--link-hover-text)] cursor-pointer;
+    }
+}

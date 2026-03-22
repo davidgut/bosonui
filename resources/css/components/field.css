@@ -1,0 +1,9 @@
+@theme {
+    /* Field Component Variables */
+}
+
+@layer components {
+    .field {
+        @apply flex flex-col gap-2 w-full;
+    }
+}

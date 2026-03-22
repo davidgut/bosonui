@@ -1,0 +1,9 @@
+@theme {
+    --error-text: var(--color-red-500);
+}
+
+@layer components {
+    .error {
+        @apply text-sm font-medium text-[var(--error-text)];
+    }
+}

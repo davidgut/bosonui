@@ -1,0 +1,89 @@
+@theme {
+    /* Spacer Component Variables */
+}
+
+@layer components {
+    .spacer {
+        @apply block;
+    }
+
+    .spacer-xs {
+        @apply h-1;
+    }
+
+    .spacer-sm {
+        @apply h-2;
+    }
+
+    .spacer-md {
+        @apply h-4;
+    }
+
+    .spacer-lg {
+        @apply h-6;
+    }
+
+    .spacer-xl {
+        @apply h-8;
+    }
+
+    .spacer-2xl {
+        @apply h-12;
+    }
+
+    .spacer-3xl {
+        @apply h-16;
+    }
+
+    .spacer-4xl {
+        @apply h-24;
+    }
+
+    .spacer-5xl {
+        @apply h-32;
+    }
+
+    .spacer-6xl {
+        @apply h-48;
+    }
+
+    .spacer-vertical.spacer-xs {
+        @apply w-1 h-auto;
+    }
+
+    .spacer-vertical.spacer-sm {
+        @apply w-2 h-auto;
+    }
+
+    .spacer-vertical.spacer-md {
+        @apply w-4 h-auto;
+    }
+
+    .spacer-vertical.spacer-lg {
+        @apply w-6 h-auto;
+    }
+
+    .spacer-vertical.spacer-xl {
+        @apply w-8 h-auto;
+    }
+
+    .spacer-vertical.spacer-2xl {
+        @apply w-12 h-auto;
+    }
+
+    .spacer-vertical.spacer-3xl {
+        @apply w-16 h-auto;
+    }
+
+    .spacer-vertical.spacer-4xl {
+        @apply w-24 h-auto;
+    }
+
+    .spacer-vertical.spacer-5xl {
+        @apply w-32 h-auto;
+    }
+
+    .spacer-vertical.spacer-6xl {
+        @apply w-48 h-auto;
+    }
+}

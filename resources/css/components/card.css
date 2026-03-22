@@ -1,0 +1,26 @@
+@theme {
+    --card-bg: var(--color-white);
+    --card-text: var(--color-gray-900);
+    --card-border: var(--color-gray-200);
+    --card-radius: var(--radius-xl);
+    --card-px: calc(var(--spacing) * 6);
+    --card-py: calc(var(--spacing) * 6);
+
+    /* Size: SM */
+    --card-sm-px: calc(var(--spacing) * 4);
+    --card-sm-py: calc(var(--spacing) * 4);
+}
+
+@layer components {
+    .card {
+        background-color: var(--card-bg);
+        color: var(--card-text);
+        border: 1px solid var(--card-border);
+        border-radius: var(--card-radius);
+        padding: var(--card-py) var(--card-px);
+    }
+
+    .card-sm {
+        padding: var(--card-sm-py) var(--card-sm-px);
+    }
+}

@@ -1,0 +1,22 @@
+@theme {
+    /* Icon Component Variables */
+}
+
+@layer components {
+    .icon {
+        @apply shrink-0;
+    }
+
+    .icon-outline,
+    .icon-solid {
+        @apply w-6 h-6;
+    }
+
+    .icon-mini {
+        @apply w-5 h-5;
+    }
+
+    .icon-micro {
+        @apply w-4 h-4;
+    }
+}

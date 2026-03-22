@@ -1,0 +1,133 @@
+@theme {
+    /* Combobox Menu */
+    --combobox-z-index: 50;
+    --combobox-shadow: var(--shadow-lg);
+    --combobox-bg: var(--form-control-bg);
+    --combobox-border: var(--color-gray-200);
+    --combobox-radius: var(--form-control-radius);
+
+    /* Input (references form control tokens) */
+    --combobox-input-bg: var(--form-control-bg);
+    --combobox-input-text: var(--form-control-text);
+    --combobox-input-border: var(--form-control-border);
+    --combobox-input-placeholder: var(--form-control-placeholder);
+    --combobox-input-focus-ring: var(--form-control-focus-ring);
+    --combobox-input-focus-border: var(--form-control-focus-border);
+
+    /* Input Size */
+    --combobox-input-height: var(--form-control-height);
+    --combobox-input-px: var(--form-control-px);
+    --combobox-input-font-size: var(--form-control-font-size);
+    --combobox-input-weight: var(--form-control-weight);
+
+    /* Option */
+    --combobox-option-px: 12px;
+    --combobox-option-py: 8px;
+    --combobox-option-radius: var(--radius-md);
+    --combobox-option-text: var(--color-gray-700);
+    --combobox-option-weight: var(--font-weight-medium);
+    --combobox-option-hover-bg: var(--color-gray-100);
+    --combobox-option-hover-text: var(--color-gray-900);
+    --combobox-option-selected-bg: var(--color-accent-50);
+    --combobox-option-selected-text: var(--color-accent-700);
+}
+
+@layer components {
+    /* Combobox Container */
+    .combobox {
+        @apply relative inline-block w-full;
+    }
+
+    /* Input Wrapper */
+    .combobox-wrapper {
+        @apply relative flex items-center;
+    }
+
+    /* Text Input */
+    .combobox-input {
+        @apply w-full border transition-colors focus:outline-none focus:ring-3 disabled:cursor-not-allowed disabled:opacity-50;
+
+        height: var(--combobox-input-height);
+        padding-left: var(--combobox-input-px);
+        padding-right: 2rem;
+        font-size: var(--combobox-input-font-size);
+        font-weight: var(--combobox-input-weight);
+        background-color: var(--combobox-input-bg);
+        color: var(--combobox-input-text);
+        border-color: var(--combobox-input-border);
+        border-radius: var(--combobox-radius);
+
+        @apply placeholder:text-[var(--combobox-input-placeholder)] focus:ring-[var(--combobox-input-focus-ring)] focus:border-[var(--combobox-input-focus-border)];
+    }
+
+    /* Chevron Icon */
+    .combobox-icon {
+        @apply absolute right-2 size-5 pointer-events-none transition-transform duration-200;
+        color: var(--combobox-input-placeholder);
+    }
+
+    .combobox-icon.rotate-180 {
+        @apply rotate-180;
+    }
+
+    /* Dropdown Menu */
+    .combobox-menu {
+        @apply absolute hidden z-[var(--combobox-z-index)] w-full mt-1 rounded-[var(--combobox-radius)] bg-[var(--combobox-bg)] shadow-[var(--combobox-shadow)] ring-1 ring-[var(--combobox-border)] focus:outline-none max-h-60 overflow-auto;
+    }
+
+    .combobox-menu.open {
+        @apply block;
+    }
+
+    /* Options */
+    .combobox-option {
+        @apply flex w-full items-center gap-2 cursor-pointer;
+        padding: var(--combobox-option-py) var(--combobox-option-px);
+        border-radius: var(--combobox-option-radius);
+        font-size: var(--combobox-input-font-size);
+        font-weight: var(--combobox-option-weight);
+        color: var(--combobox-option-text);
+    }
+
+    .combobox-option:hover {
+        background-color: var(--combobox-option-hover-bg);
+        color: var(--combobox-option-hover-text);
+    }
+
+    .combobox-option.is-selected {
+        background-color: var(--combobox-option-selected-bg);
+        color: var(--combobox-option-selected-text);
+    }
+
+    .combobox-option.is-focused {
+        background-color: var(--combobox-option-hover-bg);
+        color: var(--combobox-option-hover-text);
+    }
+
+    .combobox-option-icon {
+        @apply size-4 flex-shrink-0;
+    }
+
+    .combobox-option-check {
+        @apply size-4 ml-auto opacity-0;
+    }
+
+    .combobox-option.is-selected .combobox-option-check {
+        @apply opacity-100;
+    }
+
+    /* Content Container */
+    .combobox-content {
+        @apply max-h-48 overflow-auto;
+    }
+
+    .combobox-content:has(.combobox-option) {
+        @apply p-1;
+    }
+
+    /* No Results */
+    .combobox-no-results {
+        @apply py-1.5 text-sm text-center;
+        color: var(--combobox-input-placeholder);
+    }
+}

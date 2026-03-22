@@ -1,0 +1,39 @@
+@theme {
+    --separator-color: var(--color-gray-200);
+    --separator-text-color: var(--color-gray-500);
+}
+
+@layer components {
+    .separator-subtle {
+        --separator-color: var(--color-gray-100);
+        --separator-text-color: var(--color-gray-400);
+    }
+
+    .separator {
+        @apply flex items-center;
+    }
+
+    .separator-horizontal {
+        @apply w-full flex-row;
+    }
+
+    .separator-vertical {
+        @apply h-full w-px flex-col;
+    }
+
+    .separator-line {
+        @apply flex-1 bg-[var(--separator-color)];
+    }
+
+    .separator-horizontal .separator-line {
+        @apply h-px w-full;
+    }
+
+    .separator-vertical .separator-line {
+        @apply w-px h-full;
+    }
+
+    .separator-text {
+        @apply px-2 text-xs font-medium text-[var(--separator-text-color)] uppercase tracking-wider;
+    }
+}

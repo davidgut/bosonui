@@ -1,0 +1,38 @@
+@theme {
+    /* Navbar Container */
+    --navbar-gap: 0.25rem;
+
+    /* Navbar Item */
+    --navbar-item-font: var(--font-sans);
+    --navbar-item-weight: var(--font-weight-medium);
+    --navbar-item-text: var(--color-gray-500);
+    --navbar-item-hover-text: var(--color-gray-900);
+    --navbar-item-current-text: var(--color-gray-900);
+    --navbar-item-current-bg: var(--color-gray-100);
+    --navbar-item-radius: var(--radius-lg);
+    --navbar-item-px: 0.75rem;
+    --navbar-item-py: 0.5rem;
+}
+
+@layer components {
+    .navbar {
+        @apply flex items-center gap-[var(--navbar-gap)];
+    }
+
+    .navbar-item {
+        @apply inline-flex items-center gap-2 px-[var(--navbar-item-px)] py-[var(--navbar-item-py)] text-sm font-[var(--navbar-item-font)] font-[var(--navbar-item-weight)] text-[var(--navbar-item-text)] rounded-[var(--navbar-item-radius)] transition-colors cursor-pointer no-underline hover:text-[var(--navbar-item-hover-text)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    }
+
+    .navbar-item-current {
+        @apply bg-[var(--navbar-item-current-bg)] text-[var(--navbar-item-current-text)];
+    }
+
+    .navbar-item-icon {
+        @apply size-4 shrink-0;
+    }
+
+    /* Ensure dropdown wrapper doesn't break navbar layout */
+    .navbar > .dropdown {
+        @apply flex;
+    }
+}

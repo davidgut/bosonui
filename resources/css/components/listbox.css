@@ -1,0 +1,168 @@
+@theme {
+    /* Listbox Menu */
+    --listbox-z-index: 50;
+    --listbox-min-width: 220px;
+    --listbox-shadow: var(--shadow-lg);
+    --listbox-bg: var(--form-control-bg);
+    --listbox-border: var(--color-gray-200);
+    --listbox-radius: var(--form-control-radius);
+
+    /* Trigger (references form control tokens) */
+    --listbox-trigger-bg: var(--form-control-bg);
+    --listbox-trigger-text: var(--form-control-text);
+    --listbox-trigger-border: var(--form-control-border);
+    --listbox-trigger-placeholder: var(--form-control-placeholder);
+    --listbox-trigger-focus-ring: var(--form-control-focus-ring);
+    --listbox-trigger-focus-border: var(--form-control-focus-border);
+
+    /* Trigger Size */
+    --listbox-trigger-height: var(--form-control-height);
+    --listbox-trigger-px: var(--form-control-px);
+    --listbox-trigger-font-size: var(--form-control-font-size);
+    --listbox-trigger-weight: var(--form-control-weight);
+
+    /* Option */
+    --listbox-option-px: 12px;
+    --listbox-option-py: 8px;
+    --listbox-option-radius: var(--radius-md);
+    --listbox-option-text: var(--color-gray-700);
+    --listbox-option-weight: var(--font-weight-medium);
+    --listbox-option-hover-bg: var(--color-gray-100);
+    --listbox-option-hover-text: var(--color-gray-900);
+    --listbox-option-selected-bg: var(--color-accent-50);
+    --listbox-option-selected-text: var(--color-accent-700);
+}
+
+@layer components {
+    /* Listbox Container */
+    .listbox {
+        @apply relative inline-block w-full;
+    }
+
+    /* Trigger Button */
+    .listbox-trigger {
+        @apply w-full flex items-center justify-between border transition-colors focus-visible:outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer;
+
+        height: var(--listbox-trigger-height);
+        padding-left: var(--listbox-trigger-px);
+        padding-right: var(--listbox-trigger-px);
+        font-size: var(--listbox-trigger-font-size);
+        font-weight: var(--listbox-trigger-weight);
+        background-color: var(--listbox-trigger-bg);
+        color: var(--listbox-trigger-text);
+        border-color: var(--listbox-trigger-border);
+        border-radius: var(--listbox-radius);
+
+        @apply focus-visible:ring-[var(--listbox-trigger-focus-ring)] focus-visible:border-[var(--listbox-trigger-focus-border)];
+    }
+
+    .listbox-trigger[aria-expanded="true"] {
+        @apply ring-3 ring-[var(--listbox-trigger-focus-ring)] border-[var(--listbox-trigger-focus-border)];
+    }
+
+    .listbox-trigger-text {
+        @apply flex-1 text-left truncate;
+    }
+
+    .listbox-trigger-text.is-placeholder {
+        @apply text-[var(--listbox-trigger-placeholder)];
+    }
+
+    .listbox-trigger-icon {
+        @apply size-5 transition-transform duration-200;
+        color: var(--listbox-trigger-placeholder);
+    }
+
+    .listbox-trigger[aria-expanded="true"] .listbox-trigger-icon {
+        @apply rotate-180;
+    }
+
+    /* Dropdown Menu */
+    .listbox-menu {
+        @apply absolute hidden z-[var(--listbox-z-index)] w-full mt-1 rounded-[var(--listbox-radius)] bg-[var(--listbox-bg)] shadow-[var(--listbox-shadow)] ring-1 ring-[var(--listbox-border)] focus:outline-none max-h-60 overflow-auto;
+    }
+
+    .listbox-menu.open {
+        @apply block;
+    }
+
+    /* Options */
+    .listbox-option {
+        @apply flex w-full items-center gap-2 cursor-pointer;
+        padding: var(--listbox-option-py) var(--listbox-option-px);
+        border-radius: var(--listbox-option-radius);
+        font-size: var(--listbox-trigger-font-size);
+        font-weight: var(--listbox-option-weight);
+        color: var(--listbox-option-text);
+    }
+
+    .listbox-option:hover {
+        background-color: var(--listbox-option-hover-bg);
+        color: var(--listbox-option-hover-text);
+    }
+
+    .listbox-option.is-selected {
+        background-color: var(--listbox-option-selected-bg);
+        color: var(--listbox-option-selected-text);
+    }
+
+    .listbox-option.is-focused {
+        background-color: var(--listbox-option-hover-bg);
+        color: var(--listbox-option-hover-text);
+    }
+
+    .listbox-option-icon {
+        @apply size-4 flex-shrink-0;
+    }
+
+    .listbox-option-check {
+        @apply size-4 ml-auto opacity-0;
+    }
+
+    .listbox-option.is-selected .listbox-option-check {
+        @apply opacity-100;
+    }
+
+    /* Search Input */
+    .listbox-search-wrapper {
+        @apply relative border-b border-[var(--listbox-border)];
+    }
+
+    .listbox-search-icon {
+        @apply absolute left-3 top-1/2 -translate-y-1/2 size-4 pointer-events-none;
+        color: var(--listbox-trigger-placeholder);
+    }
+
+    .listbox-search {
+        @apply w-full transition-colors focus:outline-none focus:ring-0 border-0 bg-transparent;
+        height: var(--listbox-trigger-height);
+        font-size: var(--listbox-trigger-font-size);
+        font-weight: var(--listbox-trigger-weight);
+        padding-left: 2.25rem;
+        padding-right: 0.75rem;
+        color: var(--listbox-trigger-text);
+    }
+
+    .listbox-search::placeholder {
+        color: var(--listbox-trigger-placeholder);
+    }
+
+    /* Content Container */
+    .listbox-content {
+        @apply max-h-48 overflow-auto;
+    }
+
+    .listbox-content:has(.listbox-option) {
+        @apply p-1;
+    }
+
+    .listbox-search-wrapper + .listbox-content:has(.listbox-option) {
+        @apply pt-1;
+    }
+
+    /* No Results */
+    .listbox-no-results {
+        @apply py-1.5 text-sm text-center;
+        color: var(--listbox-trigger-placeholder);
+    }
+}

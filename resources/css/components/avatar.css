@@ -1,0 +1,263 @@
+@theme {
+    /* Avatar Sizes */
+    --avatar-size-xs: 1.5rem;
+    --avatar-size-sm: 2rem;
+    --avatar-size-md: 2.5rem;
+    --avatar-size-lg: 3rem;
+    --avatar-size-xl: 4rem;
+
+    /* Default Colors */
+    --avatar-default-bg: var(--color-gray-100);
+    --avatar-default-text: var(--color-gray-600);
+
+    /* Group */
+    --avatar-gap: -0.5rem;
+
+    /* Badge */
+    --avatar-badge-size: 30%;
+    --avatar-badge-border-width: 2px;
+
+    /* Color Variants */
+    --avatar-red-bg: var(--color-red-100);
+    --avatar-red-text: var(--color-red-600);
+
+    --avatar-orange-bg: var(--color-orange-100);
+    --avatar-orange-text: var(--color-orange-600);
+
+    --avatar-amber-bg: var(--color-amber-100);
+    --avatar-amber-text: var(--color-amber-600);
+
+    --avatar-yellow-bg: var(--color-yellow-100);
+    --avatar-yellow-text: var(--color-yellow-600);
+
+    --avatar-lime-bg: var(--color-lime-100);
+    --avatar-lime-text: var(--color-lime-600);
+
+    --avatar-green-bg: var(--color-green-100);
+    --avatar-green-text: var(--color-green-600);
+
+    --avatar-emerald-bg: var(--color-emerald-100);
+    --avatar-emerald-text: var(--color-emerald-600);
+
+    --avatar-teal-bg: var(--color-teal-100);
+    --avatar-teal-text: var(--color-teal-600);
+
+    --avatar-cyan-bg: var(--color-cyan-100);
+    --avatar-cyan-text: var(--color-cyan-600);
+
+    --avatar-sky-bg: var(--color-sky-100);
+    --avatar-sky-text: var(--color-sky-600);
+
+    --avatar-blue-bg: var(--color-blue-100);
+    --avatar-blue-text: var(--color-blue-600);
+
+    --avatar-indigo-bg: var(--color-indigo-100);
+    --avatar-indigo-text: var(--color-indigo-600);
+
+    --avatar-violet-bg: var(--color-violet-100);
+    --avatar-violet-text: var(--color-violet-600);
+
+    --avatar-purple-bg: var(--color-purple-100);
+    --avatar-purple-text: var(--color-purple-600);
+
+    --avatar-fuchsia-bg: var(--color-fuchsia-100);
+    --avatar-fuchsia-text: var(--color-fuchsia-600);
+
+    --avatar-pink-bg: var(--color-pink-100);
+    --avatar-pink-text: var(--color-pink-600);
+
+    --avatar-rose-bg: var(--color-rose-100);
+    --avatar-rose-text: var(--color-rose-600);
+
+    --avatar-white-bg: var(--color-white);
+    --avatar-white-text: var(--color-gray-800);
+    --avatar-white-border: var(--color-gray-200);
+}
+
+@layer components {
+    .avatar {
+        @apply relative inline-flex items-center justify-center shrink-0 overflow-hidden select-none bg-cover bg-center;
+
+        /* Internal variables for color swapping */
+        --avatar-bg: var(--avatar-default-bg);
+        --avatar-text: var(--avatar-default-text);
+
+        background-color: var(--avatar-bg);
+        color: var(--avatar-text);
+
+        /* Default to MD size */
+        width: var(--avatar-size-md);
+        height: var(--avatar-size-md);
+        font-size: calc(var(--avatar-size-md) * 0.4);
+    }
+
+    /* Sizes */
+    .avatar-xs {
+        width: var(--avatar-size-xs);
+        height: var(--avatar-size-xs);
+        font-size: calc(var(--avatar-size-xs) * 0.4);
+    }
+
+    .avatar-sm {
+        width: var(--avatar-size-sm);
+        height: var(--avatar-size-sm);
+        font-size: calc(var(--avatar-size-sm) * 0.4);
+    }
+
+    .avatar-md {
+        width: var(--avatar-size-md);
+        height: var(--avatar-size-md);
+        font-size: calc(var(--avatar-size-md) * 0.4);
+    }
+
+    .avatar-lg {
+        width: var(--avatar-size-lg);
+        height: var(--avatar-size-lg);
+        font-size: calc(var(--avatar-size-lg) * 0.4);
+    }
+
+    .avatar-xl {
+        width: var(--avatar-size-xl);
+        height: var(--avatar-size-xl);
+        font-size: calc(var(--avatar-size-xl) * 0.4);
+    }
+
+    /* Shapes */
+    .avatar-circle {
+        @apply rounded-full;
+    }
+    
+    .avatar-rounded {
+        @apply rounded-md;
+    }
+
+    /* Type: Button/Interactive */
+    button.avatar, a.avatar {
+        @apply cursor-pointer hover:opacity-90 transition-opacity focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-gray-400;
+    }
+    
+    /* Content Types */
+    .avatar-image {
+        @apply w-full h-full object-cover;
+    }
+    
+    .avatar-initials {
+        @apply w-full h-full flex items-center justify-center font-medium uppercase leading-none;
+    }
+    
+    .avatar-icon {
+        @apply w-3/5 h-3/5;
+    }
+
+    /* Group */
+    .avatar-group {
+        @apply flex items-center -space-x-2 isolate;
+    }
+
+    .avatar-group > .avatar {
+        @apply relative ring-2 ring-white z-0 hover:z-10 transition-all;
+    }
+
+    /* Badge */
+    .avatar-badge {
+        @apply absolute flex items-center justify-center text-[10px] font-bold leading-none ring-2 ring-white rounded-md;
+        min-width: var(--avatar-badge-size);
+        min-height: var(--avatar-badge-size);
+        padding: 0 0.25em; /* Padding for text badges */
+        
+        /* Positioning logic - usually handled by utility classes in blade, but defaults here */
+        z-index: 10;
+    }
+
+    /* Color Variants */
+    .avatar-red {
+        --avatar-bg: var(--avatar-red-bg);
+        --avatar-text: var(--avatar-red-text);
+    }
+
+    .avatar-orange {
+        --avatar-bg: var(--avatar-orange-bg);
+        --avatar-text: var(--avatar-orange-text);
+    }
+
+    .avatar-amber {
+        --avatar-bg: var(--avatar-amber-bg);
+        --avatar-text: var(--avatar-amber-text);
+    }
+
+    .avatar-yellow {
+        --avatar-bg: var(--avatar-yellow-bg);
+        --avatar-text: var(--avatar-yellow-text);
+    }
+
+    .avatar-lime {
+        --avatar-bg: var(--avatar-lime-bg);
+        --avatar-text: var(--avatar-lime-text);
+    }
+
+    .avatar-green {
+        --avatar-bg: var(--avatar-green-bg);
+        --avatar-text: var(--avatar-green-text);
+    }
+
+    .avatar-emerald {
+        --avatar-bg: var(--avatar-emerald-bg);
+        --avatar-text: var(--avatar-emerald-text);
+    }
+
+    .avatar-teal {
+        --avatar-bg: var(--avatar-teal-bg);
+        --avatar-text: var(--avatar-teal-text);
+    }
+
+    .avatar-cyan {
+        --avatar-bg: var(--avatar-cyan-bg);
+        --avatar-text: var(--avatar-cyan-text);
+    }
+
+    .avatar-sky {
+        --avatar-bg: var(--avatar-sky-bg);
+        --avatar-text: var(--avatar-sky-text);
+    }
+
+    .avatar-blue {
+        --avatar-bg: var(--avatar-blue-bg);
+        --avatar-text: var(--avatar-blue-text);
+    }
+
+    .avatar-indigo {
+        --avatar-bg: var(--avatar-indigo-bg);
+        --avatar-text: var(--avatar-indigo-text);
+    }
+
+    .avatar-violet {
+        --avatar-bg: var(--avatar-violet-bg);
+        --avatar-text: var(--avatar-violet-text);
+    }
+
+    .avatar-purple {
+        --avatar-bg: var(--avatar-purple-bg);
+        --avatar-text: var(--avatar-purple-text);
+    }
+
+    .avatar-fuchsia {
+        --avatar-bg: var(--avatar-fuchsia-bg);
+        --avatar-text: var(--avatar-fuchsia-text);
+    }
+
+    .avatar-pink {
+        --avatar-bg: var(--avatar-pink-bg);
+        --avatar-text: var(--avatar-pink-text);
+    }
+
+    .avatar-rose {
+        --avatar-bg: var(--avatar-rose-bg);
+        --avatar-text: var(--avatar-rose-text);
+    }
+
+    .avatar-white {
+        --avatar-bg: var(--avatar-white-bg);
+        --avatar-text: var(--avatar-white-text);
+        border: 1px solid var(--avatar-white-border);
+    }
+}

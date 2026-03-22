@@ -1,0 +1,277 @@
+@theme {
+    /* Badge Base */
+    --badge-font: var(--font-sans);
+    --badge-weight: var(--font-weight-medium);
+    --badge-radius: var(--radius-lg);
+
+    /* Size */
+    --badge-px: calc(var(--spacing) * 2);
+    --badge-py: calc(var(--spacing) * 1.5);
+    --badge-font-size: var(--text-xs);
+    --badge-gap: calc(var(--spacing) * 1.5);
+
+    /* Size: XS */
+    --badge-xs-px: calc(var(--spacing) * 1);
+    --badge-xs-py: calc(var(--spacing) * 0.5);
+    --badge-xs-font-size: 10px;
+    --badge-xs-gap: calc(var(--spacing) * 1);
+    --badge-xs-radius: var(--radius-sm);
+
+    /* Size: SM */
+    --badge-sm-px: calc(var(--spacing) * 1.5);
+    --badge-sm-py: calc(var(--spacing) * 1);
+
+    /* Size: LG */
+    --badge-lg-px: calc(var(--spacing) * 2.5);
+    --badge-lg-py: calc(var(--spacing) * 2);
+
+    /* Default (Gray) Variant */
+    --badge-default-bg: var(--color-gray-100);
+    --badge-default-text: var(--color-gray-700);
+    --badge-default-ring: color-mix(in srgb, var(--color-gray-500), transparent 90%);
+
+    /* Zinc Variant */
+    --badge-zinc-bg: var(--color-zinc-100);
+    --badge-zinc-text: var(--color-zinc-700);
+    --badge-zinc-ring: color-mix(in srgb, var(--color-zinc-500), transparent 90%);
+
+    /* Red Variant */
+    --badge-red-bg: var(--color-red-100);
+    --badge-red-text: var(--color-red-700);
+    --badge-red-ring: color-mix(in srgb, var(--color-red-600), transparent 90%);
+
+    /* Orange Variant */
+    --badge-orange-bg: var(--color-orange-100);
+    --badge-orange-text: var(--color-orange-700);
+    --badge-orange-ring: color-mix(in srgb, var(--color-orange-600), transparent 90%);
+
+    /* Amber Variant */
+    --badge-amber-bg: var(--color-amber-100);
+    --badge-amber-text: var(--color-amber-700);
+    --badge-amber-ring: color-mix(in srgb, var(--color-amber-600), transparent 90%);
+
+    /* Yellow Variant */
+    --badge-yellow-bg: var(--color-yellow-100);
+    --badge-yellow-text: var(--color-yellow-800);
+    --badge-yellow-ring: color-mix(in srgb, var(--color-yellow-600), transparent 80%);
+
+    /* Lime Variant */
+    --badge-lime-bg: var(--color-lime-100);
+    --badge-lime-text: var(--color-lime-700);
+    --badge-lime-ring: color-mix(in srgb, var(--color-lime-600), transparent 90%);
+
+    /* Green Variant */
+    --badge-green-bg: var(--color-green-100);
+    --badge-green-text: var(--color-green-700);
+    --badge-green-ring: color-mix(in srgb, var(--color-green-600), transparent 90%);
+
+    /* Emerald Variant */
+    --badge-emerald-bg: var(--color-emerald-100);
+    --badge-emerald-text: var(--color-emerald-700);
+    --badge-emerald-ring: color-mix(in srgb, var(--color-emerald-600), transparent 90%);
+
+    /* Teal Variant */
+    --badge-teal-bg: var(--color-teal-100);
+    --badge-teal-text: var(--color-teal-700);
+    --badge-teal-ring: color-mix(in srgb, var(--color-teal-600), transparent 90%);
+
+    /* Cyan Variant */
+    --badge-cyan-bg: var(--color-cyan-100);
+    --badge-cyan-text: var(--color-cyan-700);
+    --badge-cyan-ring: color-mix(in srgb, var(--color-cyan-600), transparent 90%);
+
+    /* Sky Variant */
+    --badge-sky-bg: var(--color-sky-100);
+    --badge-sky-text: var(--color-sky-700);
+    --badge-sky-ring: color-mix(in srgb, var(--color-sky-600), transparent 90%);
+
+    /* Blue Variant */
+    --badge-blue-bg: var(--color-blue-100);
+    --badge-blue-text: var(--color-blue-700);
+    --badge-blue-ring: color-mix(in srgb, var(--color-blue-700), transparent 90%);
+
+    /* Indigo Variant */
+    --badge-indigo-bg: var(--color-indigo-100);
+    --badge-indigo-text: var(--color-indigo-700);
+    --badge-indigo-ring: color-mix(in srgb, var(--color-indigo-700), transparent 90%);
+
+    /* Violet Variant */
+    --badge-violet-bg: var(--color-violet-100);
+    --badge-violet-text: var(--color-violet-700);
+    --badge-violet-ring: color-mix(in srgb, var(--color-violet-700), transparent 90%);
+
+    /* Purple Variant */
+    --badge-purple-bg: var(--color-purple-100);
+    --badge-purple-text: var(--color-purple-700);
+    --badge-purple-ring: color-mix(in srgb, var(--color-purple-700), transparent 90%);
+
+    /* Fuchsia Variant */
+    --badge-fuchsia-bg: var(--color-fuchsia-100);
+    --badge-fuchsia-text: var(--color-fuchsia-700);
+    --badge-fuchsia-ring: color-mix(in srgb, var(--color-fuchsia-700), transparent 90%);
+
+    /* Pink Variant */
+    --badge-pink-bg: var(--color-pink-100);
+    --badge-pink-text: var(--color-pink-700);
+    --badge-pink-ring: color-mix(in srgb, var(--color-pink-700), transparent 90%);
+
+    /* Rose Variant */
+    --badge-rose-bg: var(--color-rose-100);
+    --badge-rose-text: var(--color-rose-700);
+    --badge-rose-ring: color-mix(in srgb, var(--color-rose-700), transparent 90%);
+}
+
+@layer components {
+    .badge {
+        @apply inline-flex items-center justify-center ring-1 ring-inset;
+
+        font-family: var(--badge-font);
+        font-weight: var(--badge-weight);
+        font-size: var(--badge-font-size);
+        padding: var(--badge-py) var(--badge-px);
+        gap: var(--badge-gap);
+        border-radius: var(--badge-radius);
+        background-color: var(--badge-bg);
+        color: var(--badge-text);
+        --tw-ring-color: var(--badge-ring);
+
+        /* Default colors */
+        --badge-bg: var(--badge-default-bg);
+        --badge-text: var(--badge-default-text);
+        --badge-ring: var(--badge-default-ring);
+    }
+
+    button.badge,
+    a.badge {
+        @apply cursor-pointer hover:opacity-80 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    }
+
+    .badge-pill {
+        @apply !rounded-full;
+    }
+
+    /* Sizes */
+    .badge-xs {
+        padding: var(--badge-xs-py) var(--badge-xs-px);
+        font-size: var(--badge-xs-font-size);
+        gap: var(--badge-xs-gap);
+        border-radius: var(--badge-xs-radius);
+    }
+
+    .badge-sm {
+        padding: var(--badge-sm-py) var(--badge-sm-px);
+    }
+
+    .badge-lg {
+        padding: var(--badge-lg-py) var(--badge-lg-px);
+    }
+
+    /* Color Variants */
+    .badge-zinc {
+        --badge-bg: var(--badge-zinc-bg);
+        --badge-text: var(--badge-zinc-text);
+        --badge-ring: var(--badge-zinc-ring);
+    }
+
+    .badge-red {
+        --badge-bg: var(--badge-red-bg);
+        --badge-text: var(--badge-red-text);
+        --badge-ring: var(--badge-red-ring);
+    }
+
+    .badge-orange {
+        --badge-bg: var(--badge-orange-bg);
+        --badge-text: var(--badge-orange-text);
+        --badge-ring: var(--badge-orange-ring);
+    }
+
+    .badge-amber {
+        --badge-bg: var(--badge-amber-bg);
+        --badge-text: var(--badge-amber-text);
+        --badge-ring: var(--badge-amber-ring);
+    }
+
+    .badge-yellow {
+        --badge-bg: var(--badge-yellow-bg);
+        --badge-text: var(--badge-yellow-text);
+        --badge-ring: var(--badge-yellow-ring);
+    }
+
+    .badge-lime {
+        --badge-bg: var(--badge-lime-bg);
+        --badge-text: var(--badge-lime-text);
+        --badge-ring: var(--badge-lime-ring);
+    }
+
+    .badge-green {
+        --badge-bg: var(--badge-green-bg);
+        --badge-text: var(--badge-green-text);
+        --badge-ring: var(--badge-green-ring);
+    }
+
+    .badge-emerald {
+        --badge-bg: var(--badge-emerald-bg);
+        --badge-text: var(--badge-emerald-text);
+        --badge-ring: var(--badge-emerald-ring);
+    }
+
+    .badge-teal {
+        --badge-bg: var(--badge-teal-bg);
+        --badge-text: var(--badge-teal-text);
+        --badge-ring: var(--badge-teal-ring);
+    }
+
+    .badge-cyan {
+        --badge-bg: var(--badge-cyan-bg);
+        --badge-text: var(--badge-cyan-text);
+        --badge-ring: var(--badge-cyan-ring);
+    }
+
+    .badge-sky {
+        --badge-bg: var(--badge-sky-bg);
+        --badge-text: var(--badge-sky-text);
+        --badge-ring: var(--badge-sky-ring);
+    }
+
+    .badge-blue {
+        --badge-bg: var(--badge-blue-bg);
+        --badge-text: var(--badge-blue-text);
+        --badge-ring: var(--badge-blue-ring);
+    }
+
+    .badge-indigo {
+        --badge-bg: var(--badge-indigo-bg);
+        --badge-text: var(--badge-indigo-text);
+        --badge-ring: var(--badge-indigo-ring);
+    }
+
+    .badge-violet {
+        --badge-bg: var(--badge-violet-bg);
+        --badge-text: var(--badge-violet-text);
+        --badge-ring: var(--badge-violet-ring);
+    }
+
+    .badge-purple {
+        --badge-bg: var(--badge-purple-bg);
+        --badge-text: var(--badge-purple-text);
+        --badge-ring: var(--badge-purple-ring);
+    }
+
+    .badge-fuchsia {
+        --badge-bg: var(--badge-fuchsia-bg);
+        --badge-text: var(--badge-fuchsia-text);
+        --badge-ring: var(--badge-fuchsia-ring);
+    }
+
+    .badge-pink {
+        --badge-bg: var(--badge-pink-bg);
+        --badge-text: var(--badge-pink-text);
+        --badge-ring: var(--badge-pink-ring);
+    }
+
+    .badge-rose {
+        --badge-bg: var(--badge-rose-bg);
+        --badge-text: var(--badge-rose-text);
+        --badge-ring: var(--badge-rose-ring);
+    }
+}

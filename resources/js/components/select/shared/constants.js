@@ -1,0 +1,36 @@
+/**
+ * Shared constants for listbox and combobox components
+ */
+
+export const LISTBOX_SELECTOR = '[data-controller="listbox"]';
+export const COMBOBOX_SELECTOR = '[data-controller="combobox"]';
+
+export const CLASSES = {
+    SELECTED: 'is-selected',
+    FOCUSED: 'is-focused',
+    PLACEHOLDER: 'is-placeholder',
+    OPEN: 'open',
+    ROTATE: 'rotate-180',
+    LOADING: 'loading',
+};
+
+export const DATA_ATTRS = {
+    PLACEHOLDER: 'placeholder',
+    MULTIPLE: 'multiple',
+    SELECTED_SUFFIX: 'selectedSuffix',
+    SEARCHABLE: 'searchable',
+    ASYNC: 'async',
+    ASYNC_PARAM: 'asyncParam',
+    ASYNC_MIN: 'asyncMin',
+    ASYNC_DEBOUNCE: 'asyncDebounce',
+    VALUE: 'value',
+    LABEL: 'label',
+};
+
+export const DEFAULTS = {
+    PLACEHOLDER: 'Select...',
+    SELECTED_SUFFIX: 'selected',
+    ASYNC_PARAM: 'q',
+    ASYNC_MIN: 2,
+    ASYNC_DEBOUNCE: 300,
+};

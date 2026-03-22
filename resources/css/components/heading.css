@@ -1,0 +1,51 @@
+@theme {
+    /* Heading Component Variables */
+    --heading-font-weight: var(--font-weight-semibold);
+    --heading-color: var(--color-gray-900);
+}
+
+@layer components {
+    .heading {
+        @apply font-[var(--heading-font-weight)] text-[var(--heading-color)] text-base;
+    }
+
+    .heading-lg {
+        @apply !text-lg;
+    }
+
+    .heading-xl {
+        @apply !text-xl;
+    }
+
+    .heading-2xl {
+        @apply !text-2xl;
+    }
+
+    .heading-3xl {
+        @apply !text-3xl;
+    }
+
+    .heading-4xl {
+        @apply !text-4xl;
+    }
+
+    .heading-5xl {
+        @apply !text-5xl;
+    }
+
+    .heading-6xl {
+        @apply !text-6xl;
+    }
+
+    .heading-7xl {
+        @apply !text-7xl;
+    }
+
+    .heading-font-serif {
+        @apply font-serif;
+    }
+
+    .heading-font-mono {
+        @apply font-mono;
+    }
+}

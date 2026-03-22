@@ -1,0 +1,38 @@
+@theme {
+    /* Textarea (references form control tokens) */
+    --textarea-bg: var(--form-control-bg);
+    --textarea-text: var(--form-control-text);
+    --textarea-border: var(--form-control-border);
+    --textarea-radius: var(--form-control-radius);
+    --textarea-placeholder: var(--form-control-placeholder);
+    --textarea-focus-ring: var(--form-control-focus-ring);
+    --textarea-focus-border: var(--form-control-focus-border);
+
+    /* Size */
+    --textarea-min-height: 60px;
+    --textarea-px: var(--form-control-px);
+    --textarea-py: calc(var(--spacing) * 2);
+    --textarea-font-size: var(--form-control-font-size);
+    --textarea-weight: var(--form-control-weight);
+
+    /* Error State */
+    --textarea-error-border: var(--form-control-error-border);
+    --textarea-error-ring: var(--form-control-error-ring);
+}
+
+@layer components {
+    .textarea {
+        @apply w-full border transition-colors focus-visible:outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 flex;
+
+        min-height: var(--textarea-min-height);
+        padding: var(--textarea-py) var(--textarea-px);
+        font-size: var(--textarea-font-size);
+        font-weight: var(--textarea-weight);
+        background-color: var(--textarea-bg);
+        color: var(--textarea-text);
+        border-color: var(--textarea-border);
+        border-radius: var(--textarea-radius);
+
+        @apply placeholder:text-[var(--textarea-placeholder)] focus-visible:ring-[var(--textarea-focus-ring)] focus-visible:border-[var(--textarea-focus-border)];
+    }
+}

@@ -1,0 +1,33 @@
+@theme {
+    /* Gray Scale */
+    --color-gray-50: var(--color-zinc-50);
+    --color-gray-100: var(--color-zinc-100);
+    --color-gray-200: var(--color-zinc-200);
+    --color-gray-300: var(--color-zinc-300);
+    --color-gray-400: var(--color-zinc-400);
+    --color-gray-500: var(--color-zinc-500);
+    --color-gray-600: var(--color-zinc-600);
+    --color-gray-700: var(--color-zinc-700);
+    --color-gray-800: var(--color-zinc-800);
+    --color-gray-900: var(--color-zinc-900);
+    --color-gray-950: var(--color-zinc-950);
+
+    /* Accent (brand/primary color) */
+    --color-accent: var(--color-gray-900);
+    --color-accent-foreground: var(--color-white);
+
+    /* Form Controls (shared across input, select, textarea, listbox, combobox) */
+    --form-control-bg: var(--color-white);
+    --form-control-text: var(--color-gray-900);
+    --form-control-border: var(--color-gray-300);
+    --form-control-radius: var(--radius-lg);
+    --form-control-height: calc(var(--spacing) * 9);
+    --form-control-px: calc(var(--spacing) * 3);
+    --form-control-font-size: var(--text-sm);
+    --form-control-weight: var(--font-weight-medium);
+    --form-control-placeholder: var(--color-gray-400);
+    --form-control-focus-ring: var(--color-gray-200);
+    --form-control-focus-border: var(--color-gray-500);
+    --form-control-error-border: var(--color-red-500);
+    --form-control-error-ring: var(--color-red-200);
+}

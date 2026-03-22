@@ -1,0 +1,312 @@
+@theme {
+    /* Radio Base */
+    --radio-size: 1.125rem;
+    --radio-border: var(--color-gray-300);
+    --radio-bg: var(--color-white);
+    --radio-checked-bg: var(--color-accent);
+    --radio-checked-border: var(--color-accent);
+    --radio-checked-dot: var(--color-accent-foreground);
+    --radio-focus-ring: var(--color-gray-200);
+
+    /* Radio Group */
+    --radio-group-gap: 0.5rem;
+}
+
+@layer components {
+    /* Base Radio Container */
+    .radio {
+        @apply relative inline-flex items-start gap-3 cursor-pointer select-none;
+    }
+
+    .radio:has(> input:disabled) {
+        @apply cursor-not-allowed opacity-50;
+    }
+
+    /* Hidden Native Input */
+    .radio > input[type="radio"] {
+        @apply sr-only;
+    }
+
+    /* Visual Indicator */
+    .radio-indicator {
+        @apply flex-shrink-0 flex items-center justify-center border rounded-full transition-colors;
+        width: var(--radio-size);
+        height: var(--radio-size);
+        border-color: var(--radio-border);
+        background-color: var(--radio-bg);
+    }
+
+    /* Radio Dot */
+    .radio-dot {
+        @apply rounded-full opacity-0 transition-opacity;
+        width: calc(var(--radio-size) * 0.5);
+        height: calc(var(--radio-size) * 0.5);
+        background-color: var(--radio-checked-dot);
+    }
+
+    /* Checked State */
+    .radio:has(> input:checked) .radio-indicator {
+        background-color: var(--radio-checked-bg);
+        border-color: var(--radio-checked-border);
+    }
+
+    .radio:has(> input:checked) .radio-dot {
+        @apply opacity-100;
+    }
+
+    /* Focus State */
+    .radio:has(> input:focus-visible) .radio-indicator {
+        @apply ring-2;
+        --tw-ring-color: var(--radio-focus-ring);
+    }
+
+    /* Content Area */
+    .radio-content {
+        @apply flex flex-col gap-1 pt-px;
+    }
+
+    .radio-label {
+        @apply text-sm font-medium leading-none text-gray-900;
+    }
+
+    .radio-description {
+        @apply text-sm text-gray-500;
+    }
+
+    /* ==================== */
+    /* Images & Emojis      */
+    /* ==================== */
+
+    .radio-image {
+        @apply w-5 h-5 rounded-full object-cover;
+    }
+
+    .radio-emoji {
+        @apply flex items-center justify-center text-lg leading-none;
+    }
+
+    /* Keep icon styling as is */
+    .radio-icon {
+        @apply text-gray-500;
+    }
+
+    .radio:has(> input:checked) .radio-icon {
+        @apply text-gray-900;
+    }
+
+    /* ==================== */
+    /* Radio Group          */
+    /* ==================== */
+
+    .radio-group {
+        @apply flex flex-col;
+        gap: var(--radio-group-gap);
+    }
+
+    .radio-group-label {
+        @apply text-sm font-medium text-gray-900 mb-2;
+    }
+
+    .radio-group-items {
+        @apply flex flex-col;
+        gap: var(--radio-group-gap);
+    }
+
+    /* ==================== */
+    /* Cards Variant        */
+    /* ==================== */
+
+    .radio-group[data-variant="cards"] {
+        --radio-group-gap: 0.75rem;
+    }
+
+    .radio-group[data-variant="cards"] > .radio-group-items {
+        @apply flex-row flex-wrap;
+    }
+
+    .radio-group[data-variant="cards"] .radio {
+        @apply flex-1 p-4 border border-gray-200 rounded-lg bg-white transition-colors;
+    }
+
+    .radio-group[data-variant="cards"] .radio:hover {
+        @apply border-gray-300 bg-gray-50/50;
+    }
+
+    .radio-group[data-variant="cards"] .radio:has(> input:checked) {
+        @apply border-gray-400 bg-gray-50;
+    }
+
+    .radio-group[data-variant="cards"] .radio:has(> input:focus-visible) {
+        @apply ring-2 ring-gray-200;
+    }
+
+    /* Move indicator to the right in cards */
+    .radio-group[data-variant="cards"] .radio-indicator {
+        @apply order-last;
+    }
+
+    .radio-group[data-variant="cards"] .radio-content {
+        @apply flex-1;
+    }
+
+    /* Vertical cards (when flex-col is added) */
+    .radio-group[data-variant="cards"] > .radio-group-items.flex-col .radio {
+        @apply flex-none;
+    }
+
+    /* ==================== */
+    /* Pills Variant        */
+    /* ==================== */
+
+    .radio-group[data-variant="pills"] > .radio-group-items {
+        @apply flex-row flex-wrap gap-2;
+    }
+
+    .radio-group[data-variant="pills"] .radio {
+        @apply px-3 py-1.5 border border-gray-200 rounded-full bg-white text-sm font-medium transition-colors;
+    }
+
+    .radio-group[data-variant="pills"] .radio:hover {
+        @apply border-gray-300 bg-gray-50;
+    }
+
+    .radio-group[data-variant="pills"] .radio:has(> input:checked) {
+        @apply border-gray-900 bg-gray-900 text-white;
+    }
+
+    .radio-group[data-variant="pills"] .radio:has(> input:focus-visible) {
+        @apply ring-2 ring-gray-200 ring-offset-1;
+    }
+
+    /* Hide indicator in pills */
+    .radio-group[data-variant="pills"] .radio-indicator {
+        @apply hidden;
+    }
+
+    .radio-group[data-variant="pills"] .radio-content {
+        @apply pt-0;
+    }
+
+    .radio-group[data-variant="pills"] .radio-label {
+        @apply font-medium;
+    }
+
+    .radio-group[data-variant="pills"] .radio:has(> input:checked) .radio-label {
+        @apply text-white;
+    }
+
+    /* ==================== */
+    /* Buttons Variant      */
+    /* ==================== */
+
+    .radio-group[data-variant="buttons"] > .radio-group-items {
+        @apply flex-row flex-wrap gap-2;
+    }
+
+    .radio-group[data-variant="buttons"] .radio {
+        @apply h-9 px-3 py-2 text-sm border border-gray-200 bg-white font-medium transition-colors rounded-lg shadow-xs items-center gap-2;
+    }
+
+    .radio-group[data-variant="buttons"] .radio:hover {
+        @apply bg-gray-50;
+    }
+
+    .radio-group[data-variant="buttons"] .radio:has(> input:checked) {
+        @apply border-gray-900;
+    }
+
+    .radio-group[data-variant="buttons"] .radio:has(> input:focus-visible) {
+        @apply outline-none ring-2;
+        --tw-ring-color: var(--color-gray-200);
+    }
+
+    /* Hide indicator in buttons */
+    .radio-group[data-variant="buttons"] .radio-indicator {
+        @apply hidden;
+    }
+
+    .radio-group[data-variant="buttons"] .radio-content {
+        @apply pt-0;
+    }
+
+    .radio-group[data-variant="buttons"] .radio-icon {
+        @apply text-gray-400;
+    }
+
+    .radio-group[data-variant="buttons"] .radio:has(> input:checked) .radio-icon {
+        @apply text-gray-700;
+    }
+
+    /* Vertical buttons (when flex-col is added) */
+    .radio-group[data-variant="buttons"] > .radio-group-items.flex-col .radio {
+        @apply w-fit;
+    }
+
+    /* Buttons size variants */
+    .radio-group[data-variant="buttons"][data-size="xs"] .radio {
+        @apply !h-6 !px-2 !text-xs;
+    }
+
+    .radio-group[data-variant="buttons"][data-size="sm"] .radio {
+        @apply !h-8 !px-3 !text-xs;
+    }
+
+    .radio-group[data-variant="buttons"][data-size="lg"] .radio {
+        @apply !h-11 !px-5 !text-base !rounded-xl;
+    }
+
+    .radio-group[data-variant="buttons"][data-size="xl"] .radio {
+        @apply !h-14 !px-6 !text-lg !rounded-2xl;
+    }
+
+    /* ==================== */
+    /* Tiles Variant        */
+    /* ==================== */
+
+    .radio-group[data-variant="tiles"] > .radio-group-items {
+        @apply grid grid-cols-2 gap-3;
+    }
+
+    .radio-group[data-variant="tiles"] .radio {
+        @apply flex-col items-center justify-center text-center p-4 border border-gray-200 rounded-xl bg-white transition-all gap-3 aspect-square;
+    }
+
+    .radio-group[data-variant="tiles"] .radio:hover {
+        @apply border-gray-300;
+    }
+
+    .radio-group[data-variant="tiles"] .radio:has(> input:checked) {
+        @apply border-gray-400;
+    }
+
+    .radio-group[data-variant="tiles"] .radio:has(> input:focus-visible) {
+        @apply outline-none ring-2 ring-gray-200;
+    }
+
+    /* Hide indicator in tiles */
+    .radio-group[data-variant="tiles"] .radio-indicator {
+        @apply hidden;
+    }
+
+    .radio-group[data-variant="tiles"] .radio-content {
+        @apply pt-0;
+    }
+
+    .radio-group[data-variant="tiles"] .radio-label {
+        @apply font-medium text-gray-700;
+    }
+
+    .radio-group[data-variant="tiles"] .radio:has(> input:checked) .radio-label {
+        @apply text-gray-900;
+    }
+
+    /* Tile icon/emoji styling - Override defaults for larger size in tiles */
+    .radio-group[data-variant="tiles"] .radio-emoji {
+        @apply text-4xl;
+    }
+
+    /* Image styling - Override defaults for larger size in tiles */
+    .radio-group[data-variant="tiles"] .radio-image {
+        @apply w-12 h-12;
+    }
+}

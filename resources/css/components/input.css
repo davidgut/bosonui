@@ -1,0 +1,55 @@
+@theme {
+    /* Input (references form control tokens) */
+    --input-bg: var(--form-control-bg);
+    --input-text: var(--form-control-text);
+    --input-border: var(--form-control-border);
+    --input-radius: var(--form-control-radius);
+    --input-placeholder: var(--form-control-placeholder);
+    --input-focus-ring: var(--form-control-focus-ring);
+    --input-focus-border: var(--form-control-focus-border);
+
+    /* Size */
+    --input-height: var(--form-control-height);
+    --input-px: var(--form-control-px);
+    --input-font-size: var(--form-control-font-size);
+    --input-weight: var(--form-control-weight);
+
+    /* Icon */
+    --input-icon-color: var(--form-control-placeholder);
+    --input-icon-opacity: 0.5;
+
+    /* Error State */
+    --input-error-border: var(--form-control-error-border);
+    --input-error-ring: var(--form-control-error-ring);
+}
+
+@layer components {
+    .input {
+        @apply w-full border transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50;
+
+        height: var(--input-height);
+        padding-left: var(--input-px);
+        padding-right: var(--input-px);
+        font-size: var(--input-font-size);
+        font-weight: var(--input-weight);
+        background-color: var(--input-bg);
+        color: var(--input-text);
+        border-color: var(--input-border);
+        border-radius: var(--input-radius);
+
+        @apply placeholder:text-[var(--input-placeholder)] focus-visible:ring-[var(--input-focus-ring)] focus-visible:border-[var(--input-focus-border)];
+    }
+
+    .input-has-icon {
+        @apply !pl-9;
+    }
+
+    .input-has-icon-trailing {
+        @apply !pr-9;
+    }
+
+    .input-icon {
+        color: var(--input-icon-color);
+        opacity: var(--input-icon-opacity);
+    }
+}

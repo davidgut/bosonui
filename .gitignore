@@ -1,0 +1,23 @@
+/vendor/
+composer.lock
+node_modules/
+
+# IDE & editor directories
+.agent/
+.cursor/
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# PHP / Testing
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+
+# Misc
+*.swp
+*.swo
+*~
