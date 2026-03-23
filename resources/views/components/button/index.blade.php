@@ -1,8 +1,8 @@
 {{-- 
-@description Button. Set variant="primary|danger|ghost|..." and size="sm|lg|...". Add icon="name" for leading icon, icon:trailing="name" for trailing. Use square for icon-only buttons. The default variant is used automatically when no variant prop is passed, so variant="default" is not needed.
-@variants default, primary, secondary, outline, ghost, subtle, danger, danger-soft
+@description Button. Set variant="primary|danger|ghost|..." and size="sm|lg|...". Add icon="name" for leading icon, icon:trailing="name" for trailing. Use square for icon-only buttons. The primary variant is used automatically when no variant prop is passed, so variant="primary" is not needed.
+@variants primary, secondary, outline, ghost, subtle, danger, danger-soft
 @sizes xs, sm, md, lg, xl
-@usage <x-boson::button variant="primary" icon="check">Save</x-boson::button>
+@usage <x-boson::button icon="check">Save</x-boson::button>
 --}}
 
 @php
@@ -16,7 +16,7 @@
 
     $el = Boson::element('button')
         ->base('btn')
-        ->mod($btnAttrs->get('variant', 'default'))
+        ->mod($btnAttrs->get('variant', 'primary'))
         ->mod($btnAttrs->get('size', 'md'))
         ->when($btnAttrs->get('square'), 'mod', 'square');
 @endphp
