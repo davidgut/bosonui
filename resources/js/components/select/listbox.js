@@ -43,6 +43,7 @@ export class BosonListbox {
         this.isOpen = false;
         this.focusedIndex = -1;
         this.placeholder = element.dataset.placeholder || DEFAULTS.PLACEHOLDER;
+        this.emptyText = this.noResultsEl?.textContent?.trim() || 'No results found';
 
         this.isMultiple = element.dataset.multiple === 'true';
         this.selectedSuffix = element.dataset.selectedSuffix || DEFAULTS.SELECTED_SUFFIX;
@@ -69,7 +70,6 @@ export class BosonListbox {
             this.initialOptions = this.options.map(opt => ({
                 value: opt.dataset.value,
                 label: opt.dataset.label || opt.textContent.trim(),
-                icon: opt.querySelector('.listbox-option-icon use')?.getAttribute('href')?.replace('#icon-', '') || null,
                 element: opt.cloneNode(true)
             }));
         }
@@ -210,7 +210,7 @@ export class BosonListbox {
 
         if (! items || items.length === 0) {
             if (this.noResultsEl) {
-                this.noResultsEl.textContent = 'No results found';
+                this.noResultsEl.textContent = this.emptyText;
                 this.noResultsEl.style.display = 'block';
             }
             return;

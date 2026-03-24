@@ -14,7 +14,6 @@ import { CLASSES } from './constants.js';
 export function createOptionElement(item, isSelected = false, targetPrefix = 'listbox') {
     const value = typeof item === 'object' ? (item.value || item.id || '') : item;
     const label = typeof item === 'object' ? (item.label || item.name || item.text || value) : item;
-    const icon = typeof item === 'object' ? item.icon : null;
 
     const option = document.createElement('div');
     option.className = `${targetPrefix}-option`;
@@ -29,9 +28,6 @@ export function createOptionElement(item, isSelected = false, targetPrefix = 'li
     }
 
     let html = '';
-    if (icon) {
-        html += `<svg class="${targetPrefix}-option-icon size-4 flex-shrink-0"><use href="#icon-${icon}"></use></svg>`;
-    }
     html += `<span class="flex-1">${label}</span>`;
     html += `<svg class="${targetPrefix}-option-check size-4 ml-auto" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />

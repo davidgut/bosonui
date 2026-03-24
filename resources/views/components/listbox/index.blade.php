@@ -1,10 +1,11 @@
 {{-- 
-@description Custom select dropdown. Set name="field" placeholder="...". Add multiple for multi-select, searchable for filtering. Use async="/url" for remote options (with async:param, async:min, async:debounce). Use listbox.option with value="..." and optional icon="...".
+@description Custom select dropdown. Set name="field" placeholder="...". Add multiple for multi-select, searchable for filtering. Use async="/url" for remote options (with async:param, async:min, async:debounce). Use listbox.option with value="...".
 @prefixes async, selected
+@defaults empty message is "No results found", override with empty="No matches"
 @usage <x-boson::listbox name="country" placeholder="Select country"><x-boson::listbox.option value="us">United States</x-boson::listbox.option><x-boson::listbox.option value="ca">Canada</x-boson::listbox.option></x-boson::listbox>
 @usage <x-boson::listbox name="tags" placeholder="Select tags" multiple searchable><x-boson::listbox.option value="php">PHP</x-boson::listbox.option></x-boson::listbox>
 @usage <x-boson::listbox name="user" placeholder="Search users..." async="/api/users" async:min="1"><x-boson::listbox.option value="1">John</x-boson::listbox.option></x-boson::listbox>
-@usage <x-boson::listbox.option value="active" icon="check-circle">Active</x-boson::listbox.option>
+@usage <x-boson::listbox.option value="active">Active</x-boson::listbox.option>
 --}}
 
 @php
@@ -24,6 +25,7 @@
     $multiple = $listboxAttrs->has('multiple');
     $searchable = $listboxAttrs->has('searchable');
     $selectedSuffix = $selectedAttrs->get('suffix', 'selected');
+    $empty = $listboxAttrs->get('empty', 'No results found');
 
     $isSearchable = $searchable || $async;
 
@@ -42,7 +44,7 @@
         );
 @endphp
 
-<{{ $el->getElement() }} {{ $listboxAttrs->except(['placeholder', 'name', 'multiple', 'searchable', 'async'])->merge($el->getMergeAttributes()) }}>
+<{{ $el->getElement() }} {{ $listboxAttrs->except(['placeholder', 'name', 'multiple', 'searchable', 'async', 'empty'])->merge($el->getMergeAttributes()) }}>
     @if ($multiple)
         <input type="hidden" name="{{ $name }}" data-listbox-target="input" value="[]">
     @else
@@ -78,7 +80,7 @@
             {{ $slot }}
 
             <div class="listbox-no-results" data-listbox-target="noResults" style="display: none;">
-                No results found
+                {{ $empty }}
             </div>
         </div>
     </div>

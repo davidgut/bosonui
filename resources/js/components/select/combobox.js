@@ -38,6 +38,7 @@ export class BosonCombobox {
         this.isOpen = false;
         this.focusedIndex = -1;
         this.placeholder = element.dataset.placeholder || DEFAULTS.PLACEHOLDER;
+        this.emptyText = this.noResultsEl?.textContent?.trim() || 'No results found';
 
         this.selectedValue = '';
         this.selectedLabel = '';
@@ -61,7 +62,6 @@ export class BosonCombobox {
             this.initialOptions = this.options.map(opt => ({
                 value: opt.dataset.value,
                 label: opt.dataset.label || opt.textContent.trim(),
-                icon: opt.querySelector('.combobox-option-icon use')?.getAttribute('href')?.replace('#icon-', '') || null,
                 element: opt.cloneNode(true)
             }));
         }
@@ -167,7 +167,7 @@ export class BosonCombobox {
 
         if (! items || items.length === 0) {
             if (this.noResultsEl) {
-                this.noResultsEl.textContent = 'No results found';
+                this.noResultsEl.textContent = this.emptyText;
                 this.noResultsEl.style.display = 'block';
             }
             return;
