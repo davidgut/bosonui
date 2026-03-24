@@ -1,25 +1,37 @@
-@props([
-    'value' => null,
-    'icon' => null,
-])
+{{-- 
+@description Option element for the combobox component.
+@prefixes icon (icon:variant, icon:class), check (check:icon, check:variant, check:class)
+@defaults icon variant is "micro" (inherits from icon component), override with icon:variant="outline"
+@defaults check icon is "check", override with check:icon="check-circle"
+@usage <x-boson::combobox.option value="1" icon="user">John Doe</x-boson::combobox.option>
+--}}
+
 @php
     use DavidGut\Boson\Boson;
 
+    $iconAttrs = Boson::extract($attributes, 'icon');
+    $checkAttrs = Boson::extract($attributes, 'check');
+    $optionAttrs = Boson::except($attributes, ['icon', 'check']);
+
+    $icon = $optionAttrs->get('icon');
+    $value = $optionAttrs->get('value');
+    $checkIcon = $checkAttrs->get('icon', 'check');
+
     $el = Boson::element()
         ->base('combobox-option')
-        ->attribute('role', 'option')
-        ->attribute('data-combobox-target', 'option')
-        ->attribute('data-value', $value)
-        ->attribute('data-label', trim($slot->toHtml()))
-        ->attribute('tabindex', '-1');
+        ->role('option')
+        ->data('combobox-target', 'option')
+        ->data('value', $value)
+        ->data('label', trim($slot->toHtml()))
+        ->tabindex('-1');
 @endphp
 
-<{{ $el->getElement() }} {{ $attributes->merge($el->getMergeAttributes()) }}>
+<{{ $el->getElement() }} {{ $optionAttrs->except(['icon', 'value'])->merge($el->getMergeAttributes()) }}>
     @if ($icon)
-        <x-boson::icon :name="$icon" class="combobox-option-icon" />
+        <x-boson::icon :name="$icon" {{ $iconAttrs->merge(['class' => 'combobox-option-icon']) }} />
     @endif
     
     <span class="flex-1">{{ $slot }}</span>
     
-    <x-boson::icon name="check" class="combobox-option-check" />
+    <x-boson::icon :name="$checkIcon" {{ $checkAttrs->except('icon')->merge(['class' => 'combobox-option-check']) }} />
 </{{ $el->getElement() }}>

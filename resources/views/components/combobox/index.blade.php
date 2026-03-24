@@ -1,6 +1,7 @@
 {{-- 
 @description Combobox component - input-triggered dropdown with type-ahead search and async support.
 @prefixes async (async:param, async:min, async:debounce)
+@defaults empty message is "No results found", override with empty="No matches"
 @usage <x-boson::combobox name="user" async="/api/users" placeholder="Search users..."></x-boson::combobox>
 --}}
 
@@ -17,6 +18,7 @@
 
     $placeholder = $comboboxAttrs->get('placeholder');
     $name = $comboboxAttrs->get('name');
+    $empty = $comboboxAttrs->get('empty', 'No results found');
 
     $el = Boson::element()
         ->base('combobox')
@@ -30,7 +32,7 @@
         );
 @endphp
 
-<{{ $el->getElement() }} {{ $comboboxAttrs->except(['placeholder', 'name', 'async'])->merge($el->getMergeAttributes()) }}>
+<{{ $el->getElement() }} {{ $comboboxAttrs->except(['placeholder', 'name', 'async', 'empty'])->merge($el->getMergeAttributes()) }}>
     <input type="hidden" name="{{ $name }}" data-combobox-target="hiddenInput">
 
     <div class="combobox-wrapper">
@@ -54,7 +56,7 @@
             {{ $slot }}
 
             <div class="combobox-no-results" data-combobox-target="noResults" style="display: none;">
-                No results found
+                {{ $empty }}
             </div>
         </div>
     </div>
