@@ -1,0 +1,139 @@
+@theme {
+    /* Navlist Item */
+    --navlist-item-py: calc(var(--spacing) * 1.5);
+    --navlist-item-px: calc(var(--spacing) * 3);
+    --navlist-item-radius: var(--radius-lg);
+    --navlist-item-text: var(--color-gray-500);
+    --navlist-item-hover-text: var(--color-gray-900);
+    --navlist-item-hover-bg: var(--color-gray-100);
+    --navlist-item-current-text: var(--color-gray-900);
+    --navlist-item-current-bg: var(--color-gray-100);
+    --navlist-item-font-size: var(--text-sm);
+    --navlist-item-weight: var(--font-weight-medium);
+    --navlist-item-icon-size: 1.125rem;
+    --navlist-item-icon-color: var(--color-gray-400);
+
+    /* Navlist Group */
+    --navlist-group-heading-text: var(--color-gray-400);
+    --navlist-group-heading-font-size: var(--text-sm);
+    --navlist-group-heading-weight: var(--font-weight-medium);
+    --navlist-group-items-border: var(--color-gray-200);
+
+    /* Navlist Transition */
+    --navlist-transition: 200ms;
+}
+
+@layer components {
+    /* ---- Navlist Container ---- */
+    .navlist {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--spacing) * 0.25);
+    }
+
+    /* ---- Item ---- */
+    .navlist-item {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--spacing) * 2);
+        padding: var(--navlist-item-py) var(--navlist-item-px);
+        font-size: var(--navlist-item-font-size);
+        font-weight: var(--navlist-item-weight);
+        color: var(--navlist-item-text);
+        text-decoration: none;
+        border-radius: var(--navlist-item-radius);
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: color 150ms, background-color 150ms;
+        width: 100%;
+        text-align: left;
+    }
+
+    .navlist-item:hover {
+        color: var(--navlist-item-hover-text);
+        background-color: var(--navlist-item-hover-bg);
+    }
+
+    .navlist-item-current {
+        color: var(--navlist-item-current-text);
+        background-color: var(--navlist-item-current-bg);
+    }
+
+    .navlist-item-icon {
+        width: var(--navlist-item-icon-size);
+        height: var(--navlist-item-icon-size);
+        flex-shrink: 0;
+        color: var(--navlist-item-icon-color);
+    }
+
+    .navlist-item-text {
+        flex: 1;
+    }
+
+    /* ---- Group ---- */
+    .navlist-group {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--spacing) * 0.25);
+    }
+
+    .navlist-group-heading {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--spacing) * 2);
+        padding: var(--navlist-item-py) var(--navlist-item-px);
+        font-size: var(--navlist-group-heading-font-size);
+        font-weight: var(--navlist-group-heading-weight);
+        color: var(--navlist-group-heading-text);
+        background: none;
+        border: none;
+        width: 100%;
+        text-align: left;
+    }
+
+    .navlist-group-heading-expandable {
+        cursor: pointer;
+        border-radius: var(--navlist-item-radius);
+    }
+
+    .navlist-group-heading-expandable:hover {
+        color: var(--navlist-item-hover-text);
+        background-color: var(--navlist-item-hover-bg);
+    }
+
+    .navlist-group-chevron {
+        width: var(--navlist-item-icon-size);
+        height: var(--navlist-item-icon-size);
+        flex-shrink: 0;
+        margin-left: auto;
+        color: var(--navlist-item-icon-color);
+        transition: transform var(--navlist-transition) ease;
+    }
+
+    .navlist-group[data-expanded="true"] .navlist-group-chevron {
+        transform: rotate(-180deg);
+    }
+
+    .navlist-group-items {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--spacing) * 0.25);
+    }
+
+    .navlist-group[data-navlist-group="expandable"][data-expanded="false"] .navlist-group-items {
+        display: none;
+    }
+
+    /* Nested items in expandable groups: left border on container */
+    .navlist-group[data-navlist-group="expandable"] .navlist-group-items {
+        margin-left: calc(var(--navlist-item-px) + var(--navlist-item-icon-size) / 2);
+        padding-left: calc(var(--spacing) * 1.5);
+        border-left: 1px solid var(--navlist-group-items-border);
+    }
+
+    /* Nested items in non-expandable groups: aligned with heading */
+    .navlist-group:not([data-navlist-group="expandable"]) .navlist-item {
+        padding-left: var(--navlist-item-px);
+    }
+}

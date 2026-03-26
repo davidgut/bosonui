@@ -82,13 +82,11 @@
         --avatar-bg: var(--avatar-default-bg);
         --avatar-text: var(--avatar-default-text);
 
+        /* Internal variable for rounded shape radius (scales with size) */
+        --avatar-radius: var(--radius-lg);
+
         background-color: var(--avatar-bg);
         color: var(--avatar-text);
-
-        /* Default to MD size */
-        width: var(--avatar-size-md);
-        height: var(--avatar-size-md);
-        font-size: calc(var(--avatar-size-md) * 0.4);
     }
 
     /* Sizes */
@@ -96,30 +94,35 @@
         width: var(--avatar-size-xs);
         height: var(--avatar-size-xs);
         font-size: calc(var(--avatar-size-xs) * 0.4);
+        --avatar-radius: var(--radius-sm);
     }
 
     .avatar-sm {
         width: var(--avatar-size-sm);
         height: var(--avatar-size-sm);
         font-size: calc(var(--avatar-size-sm) * 0.4);
+        --avatar-radius: var(--radius-md);
     }
 
     .avatar-md {
         width: var(--avatar-size-md);
         height: var(--avatar-size-md);
         font-size: calc(var(--avatar-size-md) * 0.4);
+        --avatar-radius: var(--radius-lg);
     }
 
     .avatar-lg {
         width: var(--avatar-size-lg);
         height: var(--avatar-size-lg);
         font-size: calc(var(--avatar-size-lg) * 0.4);
+        --avatar-radius: var(--radius-xl);
     }
 
     .avatar-xl {
         width: var(--avatar-size-xl);
         height: var(--avatar-size-xl);
         font-size: calc(var(--avatar-size-xl) * 0.4);
+        --avatar-radius: var(--radius-2xl);
     }
 
     /* Shapes */
@@ -128,7 +131,7 @@
     }
     
     .avatar-rounded {
-        @apply rounded-md;
+        border-radius: var(--avatar-radius);
     }
 
     /* Type: Button/Interactive */

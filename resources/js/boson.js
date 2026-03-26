@@ -9,6 +9,7 @@ import './components/listbox.js';
 import './components/combobox.js';
 import './components/toast.js';
 import './components/accordion.js';
+import './components/sidebar.js';
 
 // Exports
 export { BosonEvents } from './core/events.js';
