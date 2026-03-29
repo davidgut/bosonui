@@ -1,0 +1,56 @@
+@theme {
+    --breadcrumbs-gap: 0.25rem;
+    --breadcrumbs-item-text: var(--color-gray-500);
+    --breadcrumbs-item-hover-text: var(--color-gray-700);
+    --breadcrumbs-item-current-text: var(--color-gray-400);
+    --breadcrumbs-separator-text: var(--color-gray-300);
+    --breadcrumbs-icon-size: 1rem;
+    --breadcrumbs-separator-size: 0.875rem;
+}
+
+@layer components {
+    .breadcrumbs-list {
+        @apply flex items-center list-none m-0 p-0 gap-[var(--breadcrumbs-gap)];
+    }
+
+    .breadcrumbs-item {
+        @apply inline-flex items-center gap-[var(--breadcrumbs-gap)] text-sm text-[var(--breadcrumbs-item-text)];
+    }
+
+    /* Hide separator on the first item */
+    .breadcrumbs-item:first-child > .breadcrumbs-separator {
+        @apply hidden;
+    }
+
+    .breadcrumbs-item-current {
+        @apply text-[var(--breadcrumbs-item-current-text)];
+    }
+
+    .breadcrumbs-separator {
+        @apply text-[var(--breadcrumbs-separator-text)] shrink-0;
+        font-size: var(--breadcrumbs-separator-size);
+    }
+
+    .breadcrumbs-separator.icon {
+        @apply size-3.5;
+    }
+
+    .breadcrumbs-link {
+        @apply inline-flex items-center gap-1 text-[var(--breadcrumbs-item-text)] no-underline transition-colors hover:text-[var(--breadcrumbs-item-hover-text)];
+    }
+
+    .breadcrumbs-text {
+        @apply inline-flex items-center gap-1;
+    }
+
+    .breadcrumbs-icon {
+        @apply shrink-0;
+        width: var(--breadcrumbs-icon-size);
+        height: var(--breadcrumbs-icon-size);
+    }
+
+    /* Ensure dropdown wrapper doesn't break breadcrumbs layout */
+    .breadcrumbs-item > .dropdown {
+        @apply flex;
+    }
+}
