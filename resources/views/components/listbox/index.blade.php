@@ -1,11 +1,14 @@
 {{-- 
-@description Custom select dropdown. Set name="field" placeholder="...". Add multiple for multi-select, searchable for filtering. Use async="/url" for remote options (with async:param, async:min, async:debounce). Use listbox.option with value="...".
-@prefixes async, selected
-@defaults empty message is "No results found", override with empty="No matches"
-@usage <x-boson::listbox name="country" placeholder="Select country"><x-boson::listbox.option value="us">United States</x-boson::listbox.option><x-boson::listbox.option value="ca">Canada</x-boson::listbox.option></x-boson::listbox>
-@usage <x-boson::listbox name="tags" placeholder="Select tags" multiple searchable><x-boson::listbox.option value="php">PHP</x-boson::listbox.option></x-boson::listbox>
-@usage <x-boson::listbox name="user" placeholder="Search users..." async="/api/users" async:min="1"><x-boson::listbox.option value="1">John</x-boson::listbox.option></x-boson::listbox>
-@usage <x-boson::listbox.option value="active">Active</x-boson::listbox.option>
+@description Listbox - a custom select dropdown with support for single and multi-select, search filtering, and async options.
+    Add multiple for multi-select, searchable for local filtering. Use async="/url" for remote options.
+    Set value="x" (or :value="['a','b']" for multiple) to pre-select options on page load.
+    The selected:suffix prop controls the label when multiple items are selected (e.g. "3 selected").
+@props name, placeholder, value, multiple, searchable, empty
+@prefixes async (async:param, async:min, async:debounce), selected (selected:suffix)
+@defaults empty="No results found", selected:suffix="selected"
+@usage <x-boson::listbox name="country" placeholder="Select country" value="us"><x-boson::listbox.option value="us">United States</x-boson::listbox.option></x-boson::listbox>
+@usage <x-boson::listbox name="tags" placeholder="Select tags" multiple :value="['php', 'js']"><x-boson::listbox.option value="php">PHP</x-boson::listbox.option><x-boson::listbox.option value="js">JavaScript</x-boson::listbox.option></x-boson::listbox>
+@usage <x-boson::listbox name="user" placeholder="Search users..." async="/api/users" searchable></x-boson::listbox>
 --}}
 
 @php
@@ -22,6 +25,7 @@
 
     $placeholder = $listboxAttrs->get('placeholder');
     $name = $listboxAttrs->get('name');
+    $value = $listboxAttrs->get('value');
     $multiple = $listboxAttrs->has('multiple');
     $searchable = $listboxAttrs->has('searchable');
     $selectedSuffix = $selectedAttrs->get('suffix', 'selected');
@@ -44,11 +48,11 @@
         );
 @endphp
 
-<{{ $el->getElement() }} {{ $listboxAttrs->except(['placeholder', 'name', 'multiple', 'searchable', 'async', 'empty'])->merge($el->getMergeAttributes()) }}>
+<{{ $el->getElement() }} {{ $listboxAttrs->except(['placeholder', 'name', 'value', 'multiple', 'searchable', 'async', 'empty'])->merge($el->getMergeAttributes()) }}>
     @if ($multiple)
-        <input type="hidden" name="{{ $name }}" data-listbox-target="input" value="[]">
+        <input type="hidden" name="{{ $name }}" data-listbox-target="input" value="{{ $value ? json_encode((array) $value) : '[]' }}">
     @else
-        <input type="hidden" name="{{ $name }}" data-listbox-target="input">
+        <input type="hidden" name="{{ $name }}" data-listbox-target="input" value="{{ $value }}">
     @endif
 
     <button 

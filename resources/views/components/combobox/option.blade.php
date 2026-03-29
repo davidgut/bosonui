@@ -1,5 +1,6 @@
 {{-- 
-@description Option element for the combobox component.
+@description Option for the combobox component. The visible slot text is also used as the data-label for filtering and display.
+@props value
 @usage <x-boson::combobox.option value="1">John Doe</x-boson::combobox.option>
 --}}
 

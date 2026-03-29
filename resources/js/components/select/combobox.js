@@ -69,6 +69,7 @@ export class BosonCombobox {
         this.bindOptionEvents();
         this.bindOutsideClick();
         this.bindInputEvents();
+        this.initFromValue();
     }
 
     bindInputEvents() {
@@ -85,6 +86,22 @@ export class BosonCombobox {
         });
 
         this.input.addEventListener('keydown', (e) => this.handleKeydown(e));
+    }
+
+    initFromValue() {
+        if (! this.hiddenInput || ! this.hiddenInput.value) return;
+
+        this.selectedValue = this.hiddenInput.value;
+
+        const option = this.options.find(
+            opt => String(opt.dataset.value) === String(this.selectedValue)
+        );
+
+        if (option) {
+            this.selectedLabel = option.dataset.label || option.textContent.trim();
+            this.input.value = this.selectedLabel;
+            option.classList.add(CLASSES.SELECTED);
+        }
     }
 
     bindOptionEvents() {

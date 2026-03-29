@@ -1,7 +1,11 @@
 {{-- 
-@description Combobox component - input-triggered dropdown with type-ahead search and async support.
+@description Combobox - a text input that opens a filterable dropdown of options on focus.
+    Typing filters the options locally. For remote data, use async="/url" to fetch options from the server.
+    Set value="x" to pre-select an option on page load (e.g. when editing a saved form).
+@props name, placeholder, value, empty
 @prefixes async (async:param, async:min, async:debounce)
-@defaults empty message is "No results found", override with empty="No matches"
+@defaults empty="No results found"
+@usage <x-boson::combobox name="user" placeholder="Search users..." value="1"><x-boson::combobox.option value="1">John Doe</x-boson::combobox.option></x-boson::combobox>
 @usage <x-boson::combobox name="user" async="/api/users" placeholder="Search users..."></x-boson::combobox>
 --}}
 
@@ -18,6 +22,7 @@
 
     $placeholder = $comboboxAttrs->get('placeholder');
     $name = $comboboxAttrs->get('name');
+    $value = $comboboxAttrs->get('value');
     $empty = $comboboxAttrs->get('empty', 'No results found');
 
     $el = Boson::element()
@@ -32,8 +37,8 @@
         );
 @endphp
 
-<{{ $el->getElement() }} {{ $comboboxAttrs->except(['placeholder', 'name', 'async', 'empty'])->merge($el->getMergeAttributes()) }}>
-    <input type="hidden" name="{{ $name }}" data-combobox-target="hiddenInput">
+<{{ $el->getElement() }} {{ $comboboxAttrs->except(['placeholder', 'name', 'value', 'async', 'empty'])->merge($el->getMergeAttributes()) }}>
+    <input type="hidden" name="{{ $name }}" data-combobox-target="hiddenInput" value="{{ $value }}">
 
     <div class="combobox-wrapper">
         <input 
