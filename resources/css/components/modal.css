@@ -8,7 +8,7 @@
 
 @layer components {
     .modal-overlay {
-        @apply fixed inset-0 z-[var(--modal-z-index)] flex items-center justify-center bg-[var(--modal-overlay-bg)] backdrop-blur-sm opacity-0 invisible transition-all duration-200;
+        @apply fixed inset-0 z-[var(--modal-z-index)] flex items-center justify-center p-8 bg-[var(--modal-overlay-bg)] backdrop-blur-sm opacity-0 invisible transition-all duration-200;
     }
 
     .modal-overlay.open {
@@ -16,7 +16,7 @@
     }
 
     .modal-content {
-        @apply relative w-full max-w-lg transform rounded-[var(--modal-radius)] bg-[var(--modal-bg)] p-6 text-left shadow-[var(--modal-shadow)] transition-all duration-200 scale-95 opacity-0;
+        @apply relative w-full max-w-lg max-h-full overflow-y-auto transform rounded-[var(--modal-radius)] bg-[var(--modal-bg)] p-6 text-left shadow-[var(--modal-shadow)] transition-all duration-200 scale-95 opacity-0;
     }
 
     .modal-overlay.open .modal-content {
