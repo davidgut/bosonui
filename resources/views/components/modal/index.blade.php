@@ -1,5 +1,5 @@
 {{-- 
-@description Modal dialog. Set name="modalName" and open with modal.trigger name="modalName". Close via X button, Escape key, or backdrop click. Use modal.form for form modals.
+@description Modal dialog. Set name="modalName" and open with modal.trigger name="modalName". Close via X button, Escape key, or backdrop click.
 @usage <x-boson::modal name="confirm">Content here</x-boson::modal>
 @usage <x-boson::modal.trigger name="confirm"><x-boson::button>Open</x-boson::button></x-boson::modal.trigger>
 --}}

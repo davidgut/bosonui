@@ -6,16 +6,72 @@
 import { APPEND_TO_ATTR, NO_RESET_ATTR, NO_CLOSE_ATTR, MODAL_ATTR, ERROR_SELECTOR } from './constants.js';
 
 /**
- * Handle redirect response.
- * @param {Object} data - Response data
+ * Handle redirect response via native HTTP redirect detection.
+ * Suppressed when the response contains update data (data.data key).
+ * @param {HTMLFormElement} form
+ * @param {Object} data - Parsed response data
+ * @param {Response} response - The fetch Response object
  * @returns {boolean} - True if redirecting
  */
-export function handleRedirect(data) {
-    if (data.redirect) {
-        window.location.href = data.redirect;
+export function handleRedirect(form, data, response) {
+    if (data?.data) {
+        return false;
+    }
+
+    if (response.redirected) {
+        window.location.href = response.url;
         return true;
     }
+
     return false;
+}
+
+/**
+ * Flatten a nested object into dot-notation keys.
+ * e.g. { user: { name: "John" } } → { "user.name": "John" }
+ * @param {Object} obj - Object to flatten
+ * @param {string} prefix - Key prefix for recursion
+ * @returns {Object} - Flat key-value pairs
+ */
+function flattenObject(obj, prefix = '') {
+    const result = {};
+
+    for (const [key, value] of Object.entries(obj)) {
+        const path = prefix ? `${prefix}.${key}` : key;
+
+        if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+            Object.assign(result, flattenObject(value, path));
+        } else {
+            result[path] = value;
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Handle in-page update of [data-field] elements from response data.
+ * Flattens nested data into dot-notation keys, then matches against
+ * [data-field] elements on the page. Supports both flat and nested data:
+ *   { name: "John" }               → [data-field="name"]
+ *   { user: { name: "John" } }     → [data-field="user.name"]
+ * @param {HTMLFormElement} form
+ * @param {Object} data - Response data (expects { data: { field: value, ... } })
+ */
+export function handleUpdate(form, data) {
+    const fields = data?.data;
+    if (!fields || typeof fields !== 'object') {
+        return;
+    }
+
+    const flat = flattenObject(fields);
+
+    Object.entries(flat).forEach(([field, value]) => {
+        const targets = document.querySelectorAll(`[data-field="${field}"]`);
+        targets.forEach(target => {
+            target.textContent = value;
+        });
+    });
 }
 
 /**

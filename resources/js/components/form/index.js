@@ -18,6 +18,7 @@ import {
 } from './events.js';
 import {
     handleRedirect,
+    handleUpdate,
     handleAppendToSelect,
     handleFormReset,
     handleModalClose,
@@ -55,7 +56,7 @@ export class BosonForm {
             dispatchSubmitted(this.form, response);
 
             if (response.ok) {
-                this.handleSuccess(data);
+                this.handleSuccess(data, response);
             } else if (response.status === 422) {
                 this.handleValidationError(data);
             } else {
@@ -79,11 +80,14 @@ export class BosonForm {
         return BosonHttp.post(this.form.action, formData);
     }
 
-    handleSuccess(data) {
+    handleSuccess(data, response) {
         dispatchSuccess(this.form, data);
 
-        // Handle redirect (returns early if redirecting)
-        if (handleRedirect(data)) {
+        // Update [data-field] elements on the page
+        handleUpdate(this.form, data);
+
+        // Handle redirect (suppressed when data-update is set)
+        if (handleRedirect(this.form, data, response)) {
             return;
         }
 
