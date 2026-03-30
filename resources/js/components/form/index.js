@@ -1,5 +1,5 @@
 /**
- * BosonForm - Async form submission with validation error handling
+ * BosonForm - Fetch-based form submission with validation error handling
  *
  * Events (dispatched on the form element):
  * - boson:submitting - Before fetch, cancellable via preventDefault()

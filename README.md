@@ -80,9 +80,9 @@ const toast = $toast.success('Done!');
 $toast.dismiss(toast);
 ```
 
-### Async Forms
+### Fetch Forms
 
-The `<x-boson::form>` component submits via `fetch` by default — no page reload needed. Response handling is automatic:
+Add `fetch` to `<x-boson::form>` for JavaScript-powered submission. Response handling is automatic:
 
 | Controller returns | Boson does |
 |---|---|
@@ -90,11 +90,11 @@ The `<x-boson::form>` component submits via `fetch` by default — no page reloa
 | `response()->json(['data' => $model])` | Updates all `[data-field]` elements in-place, resets the form, closes the parent modal |
 | `422` validation response | Populates matching `<x-boson::error>` components |
 
-Opt out of `fetch` for standard browser submission:
-
 ```blade
-<x-boson::form :async="false" action="/login" method="POST">
+<x-boson::form fetch action="/users" method="POST">
 ```
+
+Without `fetch`, the form submits normally (Turbo handles it if installed, browser handles it otherwise).
 
 **GET forms** send form data as URL query parameters automatically.
 
