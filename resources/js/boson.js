@@ -10,9 +10,10 @@ import './components/combobox.js';
 import './components/toast.js';
 import './components/accordion.js';
 import './components/sidebar.js';
+import './components/navlist.js';
 
 // Exports
-export { BosonEvents } from './core/events.js';
-export { BosonToast } from './components/toast.js';
+export { $events } from './core/events.js';
+export { $toast } from './components/toast.js';
 export { BosonListbox } from './components/listbox.js';
 export { BosonCombobox } from './components/combobox.js';

@@ -1,25 +1,39 @@
+/**
+ * BosonSidebar - Collapsible sidebar with overlay and keyboard support
+ *
+ * Root:     data-controller="sidebar"
+ * Toggle:   data-sidebar-target="toggle"
+ * Collapse: data-sidebar-target="collapse"
+ * Overlay:  data-sidebar-target="overlay"
+ *
+ * Public: open(), close(), destroy()
+ */
 export class BosonSidebar {
     constructor(element) {
         this.element = element;
         this.isOpen = false;
+
+        this.abortController = new AbortController();
         this.init();
     }
 
     init() {
+        const signal = this.abortController.signal;
+
         // Toggle buttons (outside the sidebar, in the header)
         document.querySelectorAll('[data-sidebar-target="toggle"]').forEach(btn => {
-            btn.addEventListener('click', () => this.open());
+            btn.addEventListener('click', () => this.open(), { signal });
         });
 
         // Collapse/close button (inside the sidebar)
         this.element.querySelectorAll('[data-sidebar-target="collapse"]').forEach(btn => {
-            btn.addEventListener('click', () => this.close());
+            btn.addEventListener('click', () => this.close(), { signal });
         });
 
         // Overlay click to close
         const overlay = this.element.querySelector('[data-sidebar-target="overlay"]');
         if (overlay) {
-            overlay.addEventListener('click', () => this.close());
+            overlay.addEventListener('click', () => this.close(), { signal });
         }
 
         // Escape key to close
@@ -27,7 +41,7 @@ export class BosonSidebar {
             if (this.isOpen && e.key === 'Escape') {
                 this.close();
             }
-        });
+        }, { signal });
     }
 
     open() {
@@ -39,25 +53,9 @@ export class BosonSidebar {
         this.isOpen = false;
         this.element.dataset.sidebarOpen = 'false';
     }
-}
 
-export class BosonNavlist {
-    constructor(element) {
-        this.element = element;
-        this.init();
-    }
-
-    init() {
-        // Expandable groups
-        this.element.querySelectorAll('[data-navlist-group="expandable"]').forEach(group => {
-            const trigger = group.querySelector('[data-navlist-group-target="trigger"]');
-            if (trigger) {
-                trigger.addEventListener('click', () => {
-                    const expanded = group.dataset.expanded === 'true';
-                    group.dataset.expanded = expanded ? 'false' : 'true';
-                });
-            }
-        });
+    destroy() {
+        this.abortController.abort();
     }
 }
 
@@ -65,9 +63,5 @@ export class BosonNavlist {
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-controller="sidebar"]').forEach(el => {
         el.bosonSidebar = new BosonSidebar(el);
-    });
-
-    document.querySelectorAll('[data-controller="navlist"]').forEach(el => {
-        el.bosonNavlist = new BosonNavlist(el);
     });
 });

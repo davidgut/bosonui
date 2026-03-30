@@ -132,7 +132,7 @@ export function handleModalClose(form) {
         return;
     }
 
-    const modal = form.closest(`[${MODAL_ATTR}]`);
+    const modal = form.closest(`[${MODAL_ATTR}="modal"]`);
     if (modal && modal.bosonModal) {
         modal.bosonModal.close();
     }

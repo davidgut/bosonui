@@ -14,19 +14,6 @@ export const CLASSES = {
     LOADING: 'loading',
 };
 
-export const DATA_ATTRS = {
-    PLACEHOLDER: 'placeholder',
-    MULTIPLE: 'multiple',
-    SELECTED_SUFFIX: 'selectedSuffix',
-    SEARCHABLE: 'searchable',
-    ASYNC: 'async',
-    ASYNC_PARAM: 'asyncParam',
-    ASYNC_MIN: 'asyncMin',
-    ASYNC_DEBOUNCE: 'asyncDebounce',
-    VALUE: 'value',
-    LABEL: 'label',
-};
-
 export const DEFAULTS = {
     PLACEHOLDER: 'Select...',
     SELECTED_SUFFIX: 'selected',

@@ -116,20 +116,24 @@ export class BosonListbox {
     }
 
     bindOptionEvents() {
-        this.options.forEach((option) => {
-            option.addEventListener('click', (e) => {
+        this.optionsContainer.addEventListener('click', (e) => {
+            const option = e.target.closest('[data-listbox-target="option"]');
+            if (option) {
                 e.preventDefault();
                 e.stopPropagation();
                 this.selectOption(option);
-            });
+            }
+        });
 
-            option.addEventListener('mouseenter', () => {
+        this.optionsContainer.addEventListener('mouseenter', (e) => {
+            const option = e.target.closest('[data-listbox-target="option"]');
+            if (option) {
                 const visibleIndex = this.visibleOptions.indexOf(option);
                 if (visibleIndex >= 0) {
                     this.setFocusedIndex(visibleIndex);
                 }
-            });
-        });
+            }
+        }, true);
     }
 
     bindOutsideClick() {
@@ -185,8 +189,10 @@ export class BosonListbox {
 
     async fetchOptions(query) {
         try {
-            const url = `${this.asyncUrl}?${this.asyncParam}=${encodeURIComponent(query)}`;
-            const response = await BosonHttp.get(url);
+            const url = new URL(this.asyncUrl, window.location.origin);
+            url.searchParams.set(this.asyncParam, query);
+
+            const response = await BosonHttp.get(url.toString());
 
             if (! response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -269,7 +275,6 @@ export class BosonListbox {
     refreshOptions() {
         this.options = Array.from(this.menu.querySelectorAll('[data-listbox-target="option"]'));
         this.visibleOptions = [...this.options];
-        this.bindOptionEvents();
     }
 
     handleSearchKeydown(e) {

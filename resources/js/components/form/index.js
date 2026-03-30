@@ -74,7 +74,11 @@ export class BosonForm {
         const method = this.form.method.toUpperCase();
 
         if (method === 'GET') {
-            return BosonHttp.get(this.form.action);
+            const url = new URL(this.form.action, window.location.origin);
+            for (const [key, value] of formData) {
+                url.searchParams.append(key, value);
+            }
+            return BosonHttp.get(url.toString());
         }
 
         return BosonHttp.post(this.form.action, formData);

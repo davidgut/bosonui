@@ -1,5 +1,12 @@
 /**
  * BosonToast - Toast notification system
+ *
+ * Container: data-controller="toast"
+ * Item:      data-toast-target="item"
+ * Close:     data-toast-target="close"
+ *
+ * Public: $toast.show(options), $toast.success(msg), $toast.warning(msg),
+ *         $toast.danger(msg), $toast.dismiss(toast)
  */
 class BosonToastManager {
     constructor() {
@@ -9,29 +16,22 @@ class BosonToastManager {
 
     getContainer() {
         if (!this.container) {
-            this.container = document.querySelector('[data-boson-toast-container]');
+            this.container = document.querySelector('[data-controller="toast"]');
         }
         return this.container;
     }
 
     show(options) {
-        console.log('[BosonToast] show() called with:', options);
-        
         const container = this.getContainer();
-        console.log('[BosonToast] Container:', container);
-        
+
         if (!container) {
             console.warn('BosonToast: No toast container found. Add <x-boson::toast /> to your layout.');
             return;
         }
 
-        const config = typeof options === 'string' 
-            ? { text: options } 
-            : options;
-
+        const config = this.normalise(options);
         const toast = this.createToast(config);
-        console.log('[BosonToast] Created toast:', toast);
-        
+
         container.appendChild(toast);
 
         // Trigger enter animation
@@ -62,7 +62,7 @@ class BosonToastManager {
         if (variant) {
             toast.setAttribute('data-variant', variant);
         }
-        toast.setAttribute('data-boson-toast', '');
+        toast.setAttribute('data-toast-target', 'item');
         toast.setAttribute('role', 'alert');
 
         const iconHtml = variant && icons[variant] 
@@ -78,13 +78,13 @@ class BosonToastManager {
                 </div>
             </div>
             <div class="toast-actions">
-                <button type="button" class="btn btn-ghost btn-sm btn-square" data-toast-close>
+                <button type="button" class="btn btn-ghost btn-sm btn-square" data-toast-target="close">
                     ${this.createIcon('x-mark')}
                 </button>
             </div>
         `;
 
-        toast.querySelector('[data-toast-close]').addEventListener('click', () => {
+        toast.querySelector('[data-toast-target="close"]').addEventListener('click', () => {
             this.dismiss(toast);
         });
 
@@ -110,64 +110,66 @@ class BosonToastManager {
     }
 
     dismiss(toast) {
+        if (!toast.parentNode) return;
+
         toast.removeAttribute('data-entering');
         toast.setAttribute('data-exiting', '');
         
+        const fallback = setTimeout(() => toast.remove(), 300);
+
         toast.addEventListener('animationend', () => {
+            clearTimeout(fallback);
             toast.remove();
         }, { once: true });
+    }
 
-        // Fallback removal
-        setTimeout(() => toast.remove(), 300);
+    /**
+     * Normalise options into a config object.
+     * Accepts a string (shorthand for text) or an object.
+     */
+    normalise(options, variant = null) {
+        const config = typeof options === 'string' ? { text: options } : { ...options };
+        if (variant) config.variant = variant;
+        return config;
     }
 
     success(options) {
-        return this.show({ ...(typeof options === 'string' ? { text: options } : options), variant: 'success' });
+        return this.show(this.normalise(options, 'success'));
     }
 
     warning(options) {
-        return this.show({ ...(typeof options === 'string' ? { text: options } : options), variant: 'warning' });
+        return this.show(this.normalise(options, 'warning'));
     }
 
     danger(options) {
-        return this.show({ ...(typeof options === 'string' ? { text: options } : options), variant: 'danger' });
+        return this.show(this.normalise(options, 'danger'));
     }
 }
 
 // Global instance
-export const BosonToast = new BosonToastManager();
+export const $toast = new BosonToastManager();
 
 // Make available globally
 if (typeof window !== 'undefined') {
-    window.BosonToast = BosonToast;
+    window.$toast = $toast;
 }
 
-// Auto-initialize close buttons for server-rendered toasts
+// Auto-initialize close buttons and auto-dismiss for server-rendered toasts
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-boson-toast] [data-toast-close]').forEach(btn => {
+    document.querySelectorAll('[data-toast-target="item"] [data-toast-target="close"]').forEach(btn => {
         btn.addEventListener('click', () => {
-            const toast = btn.closest('[data-boson-toast]');
-            if (toast) {
-                toast.setAttribute('data-exiting', '');
-                setTimeout(() => toast.remove(), 300);
-            }
+            const toast = btn.closest('[data-toast-target="item"]');
+            if (toast) $toast.dismiss(toast);
         });
     });
 
-    // Auto-dismiss server-rendered toasts
-    document.querySelectorAll('[data-boson-toast]').forEach(toast => {
+    document.querySelectorAll('[data-toast-target="item"]').forEach(toast => {
         const duration = toast.hasAttribute('data-duration') 
             ? parseInt(toast.dataset.duration, 10) 
             : 5000;
         
-        // Duration of 0 means permanent (no auto-dismiss)
         if (duration > 0) {
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.setAttribute('data-exiting', '');
-                    setTimeout(() => toast.remove(), 300);
-                }
-            }, duration);
+            setTimeout(() => $toast.dismiss(toast), duration);
         }
     });
 });

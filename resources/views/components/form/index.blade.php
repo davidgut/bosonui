@@ -23,7 +23,7 @@ Validation (422) — Laravel's automatic 422 response with { errors: { email: ["
     $needsSpoof = ! in_array($httpMethod, ['GET', 'POST']);
 
     $el = Boson::element('form')
-        ->when($async, 'data', 'boson-form', true)
+        ->when($async, 'data', 'controller', 'form')
         ->attribute('action', $action)
         ->method($method);
 @endphp

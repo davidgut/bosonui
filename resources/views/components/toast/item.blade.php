@@ -1,3 +1,4 @@
+{{-- @description Individual toast notification item. Rendered by the toast container for server-side toasts and by BosonToastManager for JS toasts. --}}
 @props([
     'variant' => null,
     'heading' => null,
@@ -17,7 +18,7 @@
     class="toast" 
     @if($variant) data-variant="{{ $variant }}" @endif
     @if($duration !== null) data-duration="{{ $duration }}" @endif
-    data-boson-toast
+    data-toast-target="item"
     role="alert"
 >
     <div class="toast-body">
@@ -34,7 +35,7 @@
     </div>
     
     <div class="toast-actions">
-        <button type="button" class="btn btn-ghost btn-sm btn-square" data-toast-close>
+        <button type="button" class="btn btn-ghost btn-sm btn-square" data-toast-target="close">
             <x-boson::icon name="x-mark" variant="mini" />
         </button>
     </div>

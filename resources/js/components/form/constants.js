@@ -4,7 +4,7 @@
  */
 
 // Selector for auto-initialization
-export const FORM_SELECTOR = '[data-boson-form]';
+export const FORM_SELECTOR = '[data-controller="form"]';
 
 // Error container data attribute
 export const ERROR_ATTR = 'data-boson-error';
@@ -17,5 +17,5 @@ export const NO_CLOSE_ATTR = 'data-no-close-on-success';
 // Append to select functionality
 export const APPEND_TO_ATTR = 'data-append-to';
 
-// Modal detection
-export const MODAL_ATTR = 'data-modal';
+// Parent modal detection (matches data-controller="modal")
+export const MODAL_ATTR = 'data-controller';

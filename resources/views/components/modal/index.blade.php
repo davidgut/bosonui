@@ -17,16 +17,16 @@
 
 <div 
     class="modal-overlay" 
-    data-modal 
-    data-name="{{ $name }}" 
+    data-controller="modal" 
+    data-modal-name="{{ $name }}" 
     role="dialog" 
     aria-modal="true"
     tabindex="-1"
 >
-    <div class="fixed inset-0" data-modal-close></div> {{-- Backdrop click target --}}
+    <div class="fixed inset-0" data-modal-target="close"></div> {{-- Backdrop click target --}}
     
     <{{ $el->getElement() }} {{ $attributes->merge($el->getMergeAttributes()) }}>
-        <x-boson::button variant="ghost" size="sm" square="true" class="modal-close" data-modal-close>
+        <x-boson::button variant="ghost" size="sm" square="true" class="modal-close" data-modal-target="close">
             <x-boson::icon name="x-mark" variant="mini" />
         </x-boson::button>
         {{ $slot }}

@@ -105,20 +105,24 @@ export class BosonCombobox {
     }
 
     bindOptionEvents() {
-        this.options.forEach((option) => {
-            option.addEventListener('click', (e) => {
+        this.optionsContainer.addEventListener('click', (e) => {
+            const option = e.target.closest('[data-combobox-target="option"]');
+            if (option) {
                 e.preventDefault();
                 e.stopPropagation();
                 this.selectOption(option);
-            });
+            }
+        });
 
-            option.addEventListener('mouseenter', () => {
+        this.optionsContainer.addEventListener('mouseenter', (e) => {
+            const option = e.target.closest('[data-combobox-target="option"]');
+            if (option) {
                 const visibleIndex = this.visibleOptions.indexOf(option);
                 if (visibleIndex >= 0) {
                     this.setFocusedIndex(visibleIndex);
                 }
-            });
-        });
+            }
+        }, true);
     }
 
     bindOutsideClick() {
@@ -167,8 +171,9 @@ export class BosonCombobox {
             const response = await BosonHttp.get(url.toString());
             if (! response.ok) throw new Error('Failed to fetch');
 
-            const data = await response.json();
-            this.renderAsyncOptions(data);
+            const json = await response.json();
+            const items = json.data || json;
+            this.renderAsyncOptions(items);
         } catch (error) {
             console.error('BosonCombobox: async fetch error:', error);
             this.clearOptions();
@@ -238,7 +243,6 @@ export class BosonCombobox {
     refreshOptions() {
         this.options = Array.from(this.menu.querySelectorAll('[data-combobox-target="option"]'));
         this.visibleOptions = [...this.options];
-        this.bindOptionEvents();
     }
 
     handleKeydown(e) {

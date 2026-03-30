@@ -4,13 +4,22 @@
  * Allows inline JS execution via on:event attributes.
  * 
  * Usage:
- *   <form on:success="BosonToast.success('Saved!')">
- *   <button on:click="handleClick()">
+ *   <form on:success="$toast.success('Saved!')">
+ *   <form on:success="$('#badge').text($data.status)">
  * 
  * Available in handler:
- *   $event - The Event or CustomEvent object
- *   this   - The element with the handler attribute
+ *   $event              - The Event or CustomEvent object
+ *   $(selector)         - Chainable DOM helper: text, class, data, attr, toggle
+ *   $data               - Shorthand for $event.detail.data (response data)
+ *   $match(val, map)    - Value lookup, like PHP's match expression
+ *   $toast              - Toast notifications: $toast.success(), $toast.danger(), etc.
+ *   this                - The element with the handler attribute
  */
+
+import { createDomHelper } from './dom.js';
+import { match } from './utils.js';
+import { $toast } from '../components/toast.js';
+
 class BosonEventsManager {
     constructor() {
         // Custom boson events (dispatched as boson:eventname)
@@ -51,9 +60,6 @@ class BosonEventsManager {
         if (this.initialized) return;
         this.initialized = true;
 
-        console.log('[BosonEvents] Initializing custom events:', [...this.customEvents]);
-        console.log('[BosonEvents] Initializing native events:', [...this.nativeEvents]);
-
         // Listen for custom boson events
         this.customEvents.forEach(name => this.listenCustom(name));
 
@@ -82,7 +88,6 @@ class BosonEventsManager {
      * Add event listener for a custom boson event.
      */
     listenCustom(name) {
-        console.log(`[BosonEvents] Listening for boson:${name}`);
         document.addEventListener(`boson:${name}`, (e) => this.handleCustom(e, name), true);
     }
 
@@ -90,7 +95,6 @@ class BosonEventsManager {
      * Add event listener for a native DOM event.
      */
     listenNative(name) {
-        console.log(`[BosonEvents] Listening for native: ${name}`);
         // Use capture phase for focus/blur which don't bubble
         const useCapture = name === 'focus' || name === 'blur';
         document.addEventListener(name, (e) => this.handleNative(e, name), useCapture);
@@ -100,8 +104,6 @@ class BosonEventsManager {
      * Handle a custom boson event.
      */
     handleCustom(event, eventName) {
-        console.log(`[BosonEvents] Custom event received: boson:${eventName}`, event.target);
-        
         const element = this.findHandlerElement(event.target, eventName);
         
         if (element) {
@@ -121,7 +123,6 @@ class BosonEventsManager {
         if (element) {
             const code = this.getHandlerCode(element, eventName);
             if (code) {
-                console.log(`[BosonEvents] Native event: ${eventName}`, element);
                 this.execute(code, event, element);
             }
         }
@@ -151,13 +152,18 @@ class BosonEventsManager {
     }
 
     /**
-     * Execute handler code with $event and this context.
+     * Execute handler code with Boson helpers in scope.
+     *
+     * Injects $event, $, $data, $match, $toast as scoped variables.
      */
     execute(code, event, element) {
-        console.log(`[BosonEvents] Executing:`, code);
         try {
-            const handler = new Function('$event', code);
-            handler.call(element, event);
+            const $data = event.detail?.data || {};
+            const $ = (selector) => createDomHelper(selector);
+            const $match = match;
+
+            const handler = new Function('$event', '$', '$data', '$match', '$toast', code);
+            handler.call(element, event, $, $data, $match, $toast);
         } catch (error) {
             console.error('[BosonEvents] Error executing handler:', error);
             console.error('Handler code:', code);
@@ -166,14 +172,13 @@ class BosonEventsManager {
 }
 
 // Global instance
-export const BosonEvents = new BosonEventsManager();
+export const $events = new BosonEventsManager();
 
 // Auto-initialize on DOMContentLoaded
 if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => BosonEvents.init());
+        document.addEventListener('DOMContentLoaded', () => $events.init());
     } else {
-        BosonEvents.init();
+        $events.init();
     }
 }
-

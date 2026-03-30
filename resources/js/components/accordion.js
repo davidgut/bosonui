@@ -1,3 +1,14 @@
+/**
+ * BosonAccordion - Collapsible content sections with exclusive and transition modes
+ *
+ * Root:    data-controller="accordion"
+ * Item:    data-accordion-target="item"       (data-expanded="true|false")
+ * Heading: data-accordion-target="heading"
+ * Content: data-accordion-target="content"
+ *
+ * Options: data-accordion-exclusive, data-accordion-transition
+ * Public:  toggle(item), expand(item), collapse(item)
+ */
 
 export class BosonAccordion {
     constructor(element) {
@@ -66,7 +77,7 @@ export class BosonAccordion {
         const heading = item.querySelector('[data-accordion-target="heading"]');
         const content = item.querySelector('[data-accordion-target="content"]');
 
-        item.removeAttribute('data-expanded');
+        item.setAttribute('data-expanded', 'false');
         if (heading) heading.setAttribute('aria-expanded', 'false');
 
         if (this.transition && content) {
@@ -82,6 +93,6 @@ export class BosonAccordion {
 // Auto-initialize
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-controller="accordion"]').forEach(el => {
-        new BosonAccordion(el);
+        el.bosonAccordion = new BosonAccordion(el);
     });
 });

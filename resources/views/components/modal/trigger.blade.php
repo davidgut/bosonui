@@ -11,7 +11,8 @@
     use DavidGut\Boson\Boson;
 
     $el = Boson::element()
-        ->attribute('data-modal-trigger', $name)
+        ->attribute('data-modal-target', 'trigger')
+        ->attribute('data-modal-name', $name)
         ->class('inline-block'); // Minimal styling wrapper
 @endphp
 
