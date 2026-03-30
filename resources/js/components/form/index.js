@@ -8,6 +8,7 @@
  * - boson:error      - After 4xx/5xx or network error
  */
 
+import { lifecycle } from '../../core/lifecycle.js';
 import { BosonHttp } from '../../core/http.js';
 import { FORM_SELECTOR } from './constants.js';
 import {
@@ -30,11 +31,14 @@ import {
 export class BosonForm {
     constructor(form) {
         this.form = form;
+        this.abortController = new AbortController();
         this.init();
     }
 
     init() {
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e), {
+            signal: this.abortController.signal,
+        });
     }
 
     async handleSubmit(e) {
@@ -123,11 +127,10 @@ export class BosonForm {
             status
         );
     }
+
+    destroy() {
+        this.abortController.abort();
+    }
 }
 
-// Auto-initialize
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll(FORM_SELECTOR).forEach(form => {
-        new BosonForm(form);
-    });
-});
+lifecycle.register('form', BosonForm);

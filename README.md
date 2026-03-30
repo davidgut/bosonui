@@ -1,6 +1,6 @@
 # Boson
 
-Minimal, well-designed, flexible Laravel Blade components.
+Minimal, well-designed, flexible Laravel Blade components. Turbo-ready out of the box.
 
 ## Requirements
 
@@ -194,26 +194,64 @@ All interactive Boson components follow a consistent `data-controller` / `data-{
 </div>
 ```
 
-Every component stores its instance on the DOM element for programmatic access:
+Access component instances programmatically via `el.boson`:
 
 ```js
 const el = document.querySelector('[data-controller="modal"]');
-el.bosonModal.open();
-el.bosonModal.close();
-el.bosonModal.destroy();  // removes all event listeners
+el.boson.open();
+el.boson.close();
+el.boson.destroy();  // removes all event listeners
 ```
 
-| Component | Controller | Instance property |
-|---|---|---|
-| Accordion | `accordion` | `el.bosonAccordion` |
-| Combobox | `combobox` | `el.bosonCombobox` |
-| Dropdown | `dropdown` | `el.bosonDropdown` |
-| Form | `form` | — |
-| Listbox | `listbox` | `el.bosonListbox` |
-| Modal | `modal` | `el.bosonModal` |
-| Navlist | `navlist` | `el.bosonNavlist` |
-| Sidebar | `sidebar` | `el.bosonSidebar` |
-| Toast | `toast` | — |
+| Component | Controller |
+|---|---|
+| Accordion | `accordion` |
+| Combobox | `combobox` |
+| Dropdown | `dropdown` |
+| Form | `form` |
+| Listbox | `listbox` |
+| Modal | `modal` |
+| Navlist | `navlist` |
+| Sidebar | `sidebar` |
+| Toast | `toast` |
+
+### Turbo Compatibility
+
+Boson works out of the box with [Turbo Laravel](https://turbo-laravel.com/) — no extra configuration needed.
+
+The internal lifecycle system automatically handles:
+
+- **Turbo Drive** — components re-initialize after every page navigation and clean up before Turbo caches the page
+- **Turbo Frames** — components inside frames initialize when the frame loads new content
+- **Turbo Streams** — dynamically inserted components are initialized automatically via `MutationObserver`
+
+If your app doesn't use Turbo, nothing changes — components initialize on `DOMContentLoaded` as usual.
+
+**Building custom components?** Follow the same protocol to get Turbo compatibility for free:
+
+```js
+import { lifecycle } from '../../vendor/davidgut/boson/resources/js/core/lifecycle.js';
+
+class MyComponent {
+    constructor(element) {
+        this.element = element;
+        this.abortController = new AbortController();
+        // bind events with { signal: this.abortController.signal }
+    }
+
+    destroy() {
+        this.abortController.abort();
+    }
+}
+
+lifecycle.register('my-component', MyComponent);
+```
+
+Then in Blade:
+
+```html
+<div data-controller="my-component">...</div>
+```
 
 
 ## AI Rules Generation

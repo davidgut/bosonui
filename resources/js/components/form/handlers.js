@@ -93,12 +93,12 @@ export function handleAppendToSelect(form, data) {
     }
 
     targets.forEach(target => {
-        if (target.bosonSelect) {
+        if (target.boson) {
             // Boson select component
-            target.bosonSelect.appendOption(data);
+            target.boson.appendOption(data);
             const value = data.id || data.value;
             if (value) {
-                target.bosonSelect.selectValue(value);
+                target.boson.selectValue(value);
             }
         } else if (target.tagName === 'SELECT') {
             // Native select handling
@@ -133,8 +133,8 @@ export function handleModalClose(form) {
     }
 
     const modal = form.closest(`[${MODAL_ATTR}="modal"]`);
-    if (modal && modal.bosonModal) {
-        modal.bosonModal.close();
+    if (modal?.boson) {
+        modal.boson.close();
     }
 }
 

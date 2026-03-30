@@ -8,17 +8,16 @@
  * Public: $toast.show(options), $toast.success(msg), $toast.warning(msg),
  *         $toast.danger(msg), $toast.dismiss(toast)
  */
+import { lifecycle } from '../core/lifecycle.js';
+
 class BosonToastManager {
     constructor() {
-        this.container = null;
         this.defaultDuration = 5000;
     }
 
     getContainer() {
-        if (!this.container) {
-            this.container = document.querySelector('[data-controller="toast"]');
-        }
-        return this.container;
+        // Always query the DOM to avoid stale references after Turbo navigation
+        return document.querySelector('[data-controller="toast"]');
     }
 
     show(options) {
@@ -154,22 +153,47 @@ if (typeof window !== 'undefined') {
     window.$toast = $toast;
 }
 
-// Auto-initialize close buttons and auto-dismiss for server-rendered toasts
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-toast-target="item"] [data-toast-target="close"]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const toast = btn.closest('[data-toast-target="item"]');
-            if (toast) $toast.dismiss(toast);
-        });
-    });
+/**
+ * BosonToastController - Lifecycle wrapper for server-rendered toasts.
+ * Handles close buttons and auto-dismiss on the toast container element.
+ */
+class BosonToastController {
+    constructor(element) {
+        this.element = element;
+        this.abortController = new AbortController();
+        this.timers = [];
+        this.init();
+    }
 
-    document.querySelectorAll('[data-toast-target="item"]').forEach(toast => {
-        const duration = toast.hasAttribute('data-duration') 
-            ? parseInt(toast.dataset.duration, 10) 
-            : 5000;
-        
-        if (duration > 0) {
-            setTimeout(() => $toast.dismiss(toast), duration);
-        }
-    });
-});
+    init() {
+        const signal = this.abortController.signal;
+
+        // Close buttons for server-rendered toasts
+        this.element.querySelectorAll('[data-toast-target="item"] [data-toast-target="close"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const toast = btn.closest('[data-toast-target="item"]');
+                if (toast) $toast.dismiss(toast);
+            }, { signal });
+        });
+
+        // Auto-dismiss for server-rendered toasts
+        this.element.querySelectorAll('[data-toast-target="item"]').forEach(toast => {
+            const duration = toast.hasAttribute('data-duration') 
+                ? parseInt(toast.dataset.duration, 10) 
+                : 5000;
+            
+            if (duration > 0) {
+                const timer = setTimeout(() => $toast.dismiss(toast), duration);
+                this.timers.push(timer);
+            }
+        });
+    }
+
+    destroy() {
+        this.abortController.abort();
+        this.timers.forEach(timer => clearTimeout(timer));
+        this.timers = [];
+    }
+}
+
+lifecycle.register('toast', BosonToastController);

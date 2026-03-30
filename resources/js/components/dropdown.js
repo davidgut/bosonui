@@ -7,6 +7,8 @@
  *
  * Public: open(), close(), toggle(), destroy()
  */
+import { lifecycle } from '../core/lifecycle.js';
+
 export class BosonDropdown {
     constructor(element) {
         this.element = element;
@@ -69,9 +71,5 @@ export class BosonDropdown {
     }
 }
 
-// Auto-initialize
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-controller="dropdown"]').forEach(el => {
-        el.bosonDropdown = new BosonDropdown(el);
-    });
-});
+lifecycle.register('dropdown', BosonDropdown);
+

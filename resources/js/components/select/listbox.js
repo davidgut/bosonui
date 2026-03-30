@@ -3,6 +3,7 @@
  * search filtering, and async options support
  */
 
+import { lifecycle } from '../../core/lifecycle.js';
 import { BosonHttp } from '../../core/http.js';
 import {
     LISTBOX_SELECTOR,
@@ -57,6 +58,7 @@ export class BosonListbox {
         this.asyncDebounce = parseInt(element.dataset.asyncDebounce || DEFAULTS.ASYNC_DEBOUNCE, 10);
         this.debounceTimer = null;
 
+        this.abortController = new AbortController();
         this.init();
     }
 
@@ -141,7 +143,7 @@ export class BosonListbox {
             if (this.isOpen && ! this.element.contains(e.target)) {
                 this.close();
             }
-        });
+        }, { signal: this.abortController.signal });
     }
 
     handleSearch(query) {
@@ -535,10 +537,11 @@ export class BosonListbox {
         this.options.forEach(opt => opt.classList.remove(CLASSES.FOCUSED));
         clearTimeout(this.debounceTimer);
     }
+
+    destroy() {
+        this.abortController.abort();
+        clearTimeout(this.debounceTimer);
+    }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll(LISTBOX_SELECTOR).forEach(el => {
-        el.bosonListbox = new BosonListbox(el);
-    });
-});
+lifecycle.register('listbox', BosonListbox);

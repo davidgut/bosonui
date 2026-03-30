@@ -7,6 +7,8 @@
  *
  * Public: open(), close(), destroy()
  */
+import { lifecycle } from '../core/lifecycle.js';
+
 export class BosonModal {
     constructor(element) {
         this.element = element;
@@ -68,12 +70,11 @@ export class BosonModal {
 
     destroy() {
         this.abortController.abort();
+
+        if (this.isOpen) {
+            document.body.style.overflow = '';
+        }
     }
 }
 
-// Auto-initialize
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-controller="modal"]').forEach(el => {
-        el.bosonModal = new BosonModal(el);
-    });
-});
+lifecycle.register('modal', BosonModal);

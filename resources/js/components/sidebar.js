@@ -8,6 +8,8 @@
  *
  * Public: open(), close(), destroy()
  */
+import { lifecycle } from '../core/lifecycle.js';
+
 export class BosonSidebar {
     constructor(element) {
         this.element = element;
@@ -59,9 +61,4 @@ export class BosonSidebar {
     }
 }
 
-// Auto-initialize
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-controller="sidebar"]').forEach(el => {
-        el.bosonSidebar = new BosonSidebar(el);
-    });
-});
+lifecycle.register('sidebar', BosonSidebar);

@@ -2,6 +2,7 @@
  * BosonCombobox - Input-triggered dropdown with type-ahead search and async support
  */
 
+import { lifecycle } from '../../core/lifecycle.js';
 import { BosonHttp } from '../../core/http.js';
 import {
     COMBOBOX_SELECTOR,
@@ -49,6 +50,7 @@ export class BosonCombobox {
         this.asyncDebounce = parseInt(element.dataset.asyncDebounce || DEFAULTS.ASYNC_DEBOUNCE, 10);
         this.debounceTimer = null;
 
+        this.abortController = new AbortController();
         this.init();
     }
 
@@ -73,7 +75,9 @@ export class BosonCombobox {
     }
 
     bindInputEvents() {
-        this.input.addEventListener('focus', () => this.open());
+        const signal = this.abortController.signal;
+
+        this.input.addEventListener('focus', () => this.open(), { signal });
 
         this.input.addEventListener('input', (e) => {
             if (! this.isOpen) this.open();
@@ -83,9 +87,9 @@ export class BosonCombobox {
             } else {
                 this.handleLocalInput(e.target.value);
             }
-        });
+        }, { signal });
 
-        this.input.addEventListener('keydown', (e) => this.handleKeydown(e));
+        this.input.addEventListener('keydown', (e) => this.handleKeydown(e), { signal });
     }
 
     initFromValue() {
@@ -130,7 +134,7 @@ export class BosonCombobox {
             if (this.isOpen && ! this.element.contains(e.target)) {
                 this.close();
             }
-        });
+        }, { signal: this.abortController.signal });
     }
 
     handleLocalInput(value) {
@@ -350,10 +354,11 @@ export class BosonCombobox {
         this.options.forEach(opt => opt.classList.remove(CLASSES.FOCUSED));
         clearTimeout(this.debounceTimer);
     }
+
+    destroy() {
+        this.abortController.abort();
+        clearTimeout(this.debounceTimer);
+    }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll(COMBOBOX_SELECTOR).forEach(el => {
-        el.bosonCombobox = new BosonCombobox(el);
-    });
-});
+lifecycle.register('combobox', BosonCombobox);

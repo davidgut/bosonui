@@ -7,8 +7,9 @@
  * Content: data-accordion-target="content"
  *
  * Options: data-accordion-exclusive, data-accordion-transition
- * Public:  toggle(item), expand(item), collapse(item)
+ * Public:  toggle(item), expand(item), collapse(item), destroy()
  */
+import { lifecycle } from '../core/lifecycle.js';
 
 export class BosonAccordion {
     constructor(element) {
@@ -17,17 +18,20 @@ export class BosonAccordion {
         this.transition = this.element.hasAttribute('data-accordion-transition');
         this.items = [];
 
+        this.abortController = new AbortController();
         this.init();
     }
 
     init() {
+        const signal = this.abortController.signal;
+
         this.items = [...this.element.querySelectorAll(':scope > [data-accordion-target="item"]')];
 
         this.items.forEach(item => {
             const heading = item.querySelector('[data-accordion-target="heading"]');
             if (!heading) return;
 
-            heading.addEventListener('click', () => this.toggle(item));
+            heading.addEventListener('click', () => this.toggle(item), { signal });
 
             // Set initial aria state
             const expanded = item.getAttribute('data-expanded') === 'true';
@@ -88,11 +92,10 @@ export class BosonAccordion {
             content.style.maxHeight = '0';
         }
     }
+
+    destroy() {
+        this.abortController.abort();
+    }
 }
 
-// Auto-initialize
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-controller="accordion"]').forEach(el => {
-        el.bosonAccordion = new BosonAccordion(el);
-    });
-});
+lifecycle.register('accordion', BosonAccordion);

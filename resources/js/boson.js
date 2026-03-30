@@ -1,4 +1,5 @@
 // Core
+import './core/lifecycle.js';
 import './core/events.js';
 
 // Components
