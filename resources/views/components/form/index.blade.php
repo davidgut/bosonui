@@ -1,5 +1,5 @@
 {{-- 
-@description Form with automatic CSRF and method spoofing. Add fetch for JavaScript-powered submission with JSON response handling, validation errors, and in-page updates.
+@description Form with automatic CSRF and method spoofing. Add fetch for JavaScript-powered submission with JSON response handling, validation errors, and in-page updates. Use turbo:* prefix for Turbo attributes (e.g. turbo:confirm, turbo:stream, turbo:frame).
 
 When fetch is set, response handling is automatic based on what the controller returns:
 
@@ -9,6 +9,7 @@ Validation (422) — Laravel's automatic 422 response with { errors: { email: ["
 
 @usage <x-boson::form action="/login" method="POST">...</x-boson::form>
 @usage <x-boson::form fetch action="/users" method="POST">...</x-boson::form>
+@usage <x-boson::form action="/delete" method="DELETE" turbo:confirm="Are you sure?">...</x-boson::form>
 --}}
 
 @props([
@@ -20,12 +21,15 @@ Validation (422) — Laravel's automatic 422 response with { errors: { email: ["
 @php
     use DavidGut\Boson\Boson;
 
+    $turboAttrs = Boson::extract($attributes, 'turbo');
+
     $httpMethod = strtoupper($method);
     $needsSpoof = ! in_array($httpMethod, ['GET', 'POST']);
 
     $el = Boson::element('form')
         ->when($fetch, 'data', 'controller', 'form')
         ->when($fetch || ! $turbo, 'data', 'turbo', 'false')
+        ->turbo($turboAttrs)
         ->attribute('action', $action)
         ->method($method);
 @endphp

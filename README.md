@@ -51,7 +51,7 @@ Accordion, Avatar, Badge, Button, Card, Checkbox, Combobox, Description, Dropdow
 
 Add `<x-boson::toast />` once in your layout. Then flash toasts from PHP or trigger them from JavaScript.
 
-**PHP** — flash via the `Toast` helper in controllers or middleware:
+**PHP.** Flash via the `Toast` helper in controllers or middleware:
 
 ```php
 use DavidGut\Boson\Toast;
@@ -64,7 +64,7 @@ Toast::danger('Something went wrong.');
 
 All methods accept an optional `$heading` and `$duration` (in ms, default `5000`).
 
-**JavaScript** — trigger toasts client-side via the global `$toast` helper:
+**JavaScript.** Trigger toasts client-side via the global `$toast` helper:
 
 ```js
 $toast.show('Something happened.');
@@ -112,7 +112,7 @@ return response()->json([
 
 ### Events
 
-Boson provides a declarative event system via `on:` attributes — write inline expressions directly in Blade:
+Boson provides a declarative event system via `on:` attributes. Write inline expressions directly in Blade:
 
 ```blade
 <form on:success="$toast.success('Saved!')">
@@ -124,19 +124,19 @@ Boson provides a declarative event system via `on:` attributes — write inline 
 
 Inside a handler, these helpers are available:
 
-**`$event`** — the raw DOM event:
+**`$event`** is the raw DOM event:
 
 ```blade
 <button on:click="console.log($event.target.tagName)">Inspect</button>
 ```
 
-**`$data`** — shorthand for `$event.detail.data` (the response payload on form success):
+**`$data`** is shorthand for `$event.detail.data` (the response payload on form success):
 
 ```blade
 <form on:success="console.log($data.id, $data.name)">
 ```
 
-**`$(selector)`** — chainable DOM helper for updating page elements without a reload:
+**`$(selector)`** is a chainable DOM helper for updating page elements without a reload:
 
 ```blade
 {{-- Update text content --}}
@@ -151,20 +151,20 @@ Inside a handler, these helpers are available:
 
 Available methods: `.text(value)`, `.class(name, force?)`, `.data(key, value)`, `.attr(key, value)`, `.toggle()`.
 
-**`$match(value, map, fallback?)`** — value lookup, like PHP's `match`:
+**`$match(value, map, fallback?)`** is a value lookup, like PHP's `match`:
 
 ```blade
 <form on:success="$('#badge').data('color', $match($data.status, { active: 'green', pending: 'yellow', archived: 'gray' }, 'red'))">
 ```
 
-**`$toast`** — trigger toast notifications:
+**`$toast`** triggers toast notifications:
 
 ```blade
 <form on:success="$toast.success('Saved!')">
 <button on:click="$toast.danger({ heading: 'Error', text: 'Something went wrong.' })">
 ```
 
-**`this`** — the element that owns the `on:` attribute:
+**`this`** refers to the element that owns the `on:` attribute:
 
 ```blade
 <button on:click="this.textContent = 'Clicked!'">Click me</button>
@@ -217,15 +217,15 @@ el.boson.destroy();  // removes all event listeners
 
 ### Turbo Compatibility
 
-Boson works out of the box with [Turbo Laravel](https://turbo-laravel.com/) — no extra configuration needed.
+Turbo is entirely optional. Boson has no dependency on it and works perfectly without it. When [Turbo Laravel](https://turbo-laravel.com/) is present, everything works seamlessly with zero configuration.
 
 The internal lifecycle system automatically handles:
 
-- **Turbo Drive** — components re-initialize after every page navigation and clean up before Turbo caches the page
-- **Turbo Frames** — components inside frames initialize when the frame loads new content
-- **Turbo Streams** — dynamically inserted components are initialized automatically via `MutationObserver`
+- **Turbo Drive**: components re-initialize after every page navigation and clean up before Turbo caches the page
+- **Turbo Frames**: components inside frames initialize when the frame loads new content
+- **Turbo Streams**: dynamically inserted components are initialized automatically via `MutationObserver`
 
-If your app doesn't use Turbo, nothing changes — components initialize on `DOMContentLoaded` as usual.
+If your app doesn't use Turbo, nothing changes. Components initialize on `DOMContentLoaded` as usual.
 
 **Building custom components?** Follow the same protocol to get Turbo compatibility for free:
 
@@ -253,10 +253,50 @@ Then in Blade:
 <div data-controller="my-component">...</div>
 ```
 
+#### Turbo Attributes
 
+Link, Form, Button, Navbar Item, Navlist Item, and Breadcrumbs Item accept Turbo data attributes via the `turbo:` prop prefix. Each `turbo:*` prop maps to its `data-turbo-*` HTML attribute:
+
+```blade
+{{-- Target a Turbo Frame --}}
+<x-boson::link href="/users" turbo:frame="main">Users</x-boson::link>
+
+{{-- Replace history instead of push --}}
+<x-boson::link href="/tab" turbo:action="replace">Tab</x-boson::link>
+
+{{-- Preload link into cache --}}
+<x-boson::link href="/dashboard" turbo:preload>Dashboard</x-boson::link>
+
+{{-- Confirm dialog before form submission --}}
+<x-boson::form action="/delete" method="DELETE" turbo:confirm="Are you sure?">
+    <x-boson::button turbo:submits-with="Deleting...">Delete</x-boson::button>
+</x-boson::form>
+
+{{-- Accept Turbo Stream responses on a GET link --}}
+<x-boson::link href="/notifications" turbo:stream>Notifications</x-boson::link>
+```
+
+To **disable Turbo** on any of these components, use `:turbo="false"`:
+
+```blade
+<x-boson::link href="/legacy" :turbo="false">Legacy Page</x-boson::link>
+<x-boson::form action="/upload" method="POST" :turbo="false">...</x-boson::form>
+```
+
+| Prop | HTML Output | Description |
+|------|-------------|-------------|
+| `:turbo="false"` | `data-turbo="false"` | Disable Turbo on this element |
+| `turbo:frame` | `data-turbo-frame` | Target a specific Turbo Frame |
+| `turbo:action` | `data-turbo-action` | `advance` or `replace` history |
+| `turbo:preload` | `data-turbo-preload` | Pre-fetch into cache |
+| `turbo:prefetch` | `data-turbo-prefetch` | Control hover prefetching |
+| `turbo:stream` | `data-turbo-stream` | Accept Turbo Stream responses |
+| `turbo:confirm` | `data-turbo-confirm` | Show confirmation dialog |
+| `turbo:method` | `data-turbo-method` | Override link request method |
+| `turbo:submits-with` | `data-turbo-submits-with` | Text to show while submitting |
 ## AI Rules Generation
 
-Boson can generate a compact `.mdc` context file containing all component documentation, props, and usage examples — designed to be consumed by AI coding assistants.
+Boson can generate a compact `.mdc` context file containing all component documentation, props, and usage examples. Designed to be consumed by AI coding assistants.
 
 ```bash
 php artisan boson:rules
@@ -290,4 +330,4 @@ php artisan vendor:publish --tag=boson-views
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+MIT. See [LICENSE](LICENSE) for details.

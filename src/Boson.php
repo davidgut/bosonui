@@ -352,6 +352,33 @@ class Boson
     }
 
     /**
+     * Apply Turbo data attributes from an extracted turbo:* attribute bag.
+     * Maps each key to data-turbo-{key} (e.g. turbo:frame → data-turbo-frame).
+     * Booleans are cast to 'true'/'false' strings.
+     * No-op for null/empty values.
+     *
+     * Usage:
+     *   $turboAttrs = Boson::extract($attributes, 'turbo');
+     *   ->turbo($turboAttrs)
+     */
+    public function turbo(ComponentAttributeBag $turboAttrs): static
+    {
+        foreach ($turboAttrs->getAttributes() as $key => $value) {
+            if ($value === null || $value === '') {
+                continue;
+            }
+
+            if (is_bool($value)) {
+                $value = $value ? 'true' : 'false';
+            }
+
+            $this->attributes["data-turbo-{$key}"] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
      * Dynamic attribute assignment.
      */
     public function __call(string $method, array $parameters): static
