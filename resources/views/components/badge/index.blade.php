@@ -1,5 +1,5 @@
 {{-- 
-@description Badge/tag. Set color="green|red|blue|..." and optional variant="pill" for rounded. Add icon="name" for leading icon, icon:trailing="name" for trailing icon. Use as="a" href="..." or as="button" for interactive.
+@description Badge/tag. Set color="green|red|blue|..." and optional variant="pill" for rounded. Add icon="name" for leading icon, icon:trailing="name" for trailing icon. Use as="a" href="..." or as="button" for interactive. Props render as data attributes (data-color, data-size, data-variant) for easy JS-driven updates.
 @variants default, pill
 @prefixes icon
 @usage <x-boson::badge color="green" icon="check">Active</x-boson::badge>
@@ -18,9 +18,9 @@
 
     $el = Boson::element($as, 'span')
         ->base('badge')
-        ->when($badgeAttrs->get('variant') === 'pill', 'mod', 'pill')
-        ->mod($badgeAttrs->get('size'))
-        ->mod($badgeAttrs->get('color'));
+        ->data('variant', $badgeAttrs->get('variant'))
+        ->data('size', $badgeAttrs->get('size'))
+        ->data('color', $badgeAttrs->get('color'));
 @endphp
 
 <{{ $el->getElement() }} {{ $badgeAttrs->except(['icon', 'as', 'variant', 'size', 'color'])->merge($el->getMergeAttributes()) }}>
