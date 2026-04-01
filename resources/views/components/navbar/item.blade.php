@@ -41,10 +41,7 @@
 
 <{{ $el->getElement() }} {{ $itemAttrs->except(['icon', 'badge', 'current', 'turbo'])->merge($el->getMergeAttributes()) }}>
     @if ($icon)
-        <x-boson::icon
-            :name="$icon"
-            {{ $iconAttrs->except(['trailing'])->merge(['class' => 'navbar-item-icon']) }}
-        />
+        <x-boson::icon :name="$icon" :attributes="$iconAttrs->except(['trailing'])->merge(['class' => 'navbar-item-icon'])" />
     @endif
 
     <span>{{ $slot }}</span>
@@ -54,9 +51,6 @@
     @endif
 
     @if ($iconTrailing)
-        <x-boson::icon
-            :name="$iconTrailing"
-            {{ $iconTrailingAttrs->merge(['class' => 'navbar-item-icon']) }}
-        />
+        <x-boson::icon :name="$iconTrailing" :attributes="$iconTrailingAttrs->merge(['class' => 'navbar-item-icon'])" />
     @endif
 </{{ $el->getElement() }}>

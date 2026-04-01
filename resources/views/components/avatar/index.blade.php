@@ -50,15 +50,15 @@
     @if ($src)
         <img src="{{ $src }}" alt="{{ $name ?? 'Avatar' }}" class="avatar-image">
     @elseif ($icon)
-        <x-boson::icon :name="$icon" {{ $iconAttrs->merge(['class' => 'avatar-icon']) }} />
+        <x-boson::icon :name="$icon" :attributes="$iconAttrs->merge(['class' => 'avatar-icon'])" />
     @elseif ($initials)
         <span class="avatar-initials">{{ $initials }}</span>
     @else
-        <x-boson::icon name="user" {{ $iconAttrs->merge(['class' => 'avatar-icon']) }} />
+        <x-boson::icon name="user" :attributes="$iconAttrs->merge(['class' => 'avatar-icon'])" />
     @endif
 
     @if ($badgeAttrs->isNotEmpty())
-        <x-boson::avatar.badge {{ $badgeAttrs }} />
+        <x-boson::avatar.badge :attributes="$badgeAttrs" />
     @endif
 
     {{ $slot }}
