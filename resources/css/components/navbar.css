@@ -20,7 +20,7 @@
     }
 
     .navbar-item {
-        @apply inline-flex items-center gap-2 px-[var(--navbar-item-px)] py-[var(--navbar-item-py)] text-sm font-[var(--navbar-item-font)] font-[var(--navbar-item-weight)] text-[var(--navbar-item-text)] rounded-[var(--navbar-item-radius)] transition-colors cursor-pointer no-underline hover:text-[var(--navbar-item-hover-text)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+        @apply inline-flex items-center shrink-0 whitespace-nowrap gap-2 px-[var(--navbar-item-px)] py-[var(--navbar-item-py)] text-sm font-[var(--navbar-item-font)] font-[var(--navbar-item-weight)] text-[var(--navbar-item-text)] rounded-[var(--navbar-item-radius)] transition-colors cursor-pointer no-underline hover:text-[var(--navbar-item-hover-text)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
     }
 
     .navbar-item-current {
