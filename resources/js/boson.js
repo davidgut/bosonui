@@ -12,6 +12,7 @@ import './components/toast.js';
 import './components/accordion.js';
 import './components/sidebar.js';
 import './components/navlist.js';
+import './components/tabs.js';
 
 // Exports
 export { $events } from './core/events.js';

@@ -1,0 +1,168 @@
+@theme {
+    /* Tabs list (default / underline) */
+    --tabs-list-gap: calc(var(--spacing) * 4);
+    --tabs-list-border: var(--color-gray-200);
+
+    /* Individual tab */
+    --tab-font-size: 0.875rem;
+    --tab-font-weight: var(--font-weight-medium);
+    --tab-text: var(--color-gray-500);
+    --tab-hover-text: var(--color-gray-700);
+    --tab-active-text: var(--color-gray-900);
+    --tab-active-border: var(--color-gray-900);
+    --tab-px: 0.25rem;
+    --tab-py: 0.625rem;
+
+    /* Segmented variant */
+    --tabs-list-segmented-bg: var(--color-gray-100);
+    --tabs-list-segmented-radius: var(--radius-lg);
+    --tabs-list-segmented-p: 0.25rem;
+    --tabs-list-segmented-gap: 0.125rem;
+    --tab-segmented-radius: var(--radius-md);
+    --tab-segmented-px: 0.875rem;
+    --tab-segmented-py: 0.375rem;
+    --tab-segmented-active-bg: var(--color-white);
+    --tab-segmented-active-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+    /* Segmented small */
+    --tab-segmented-sm-font-size: 0.8125rem;
+    --tab-segmented-sm-px: 0.75rem;
+    --tab-segmented-sm-py: 0.25rem;
+
+    /* Pills variant */
+    --tabs-list-pills-gap: 0.25rem;
+    --tab-pills-bg: var(--color-gray-100);
+    --tab-pills-radius: 9999px;
+    --tab-pills-px: 0.875rem;
+    --tab-pills-py: 0.375rem;
+    --tab-pills-active-bg: var(--color-gray-900);
+    --tab-pills-active-text: var(--color-white);
+
+    /* Icon */
+    --tab-icon-size: 1rem;
+
+    /* Panel */
+    --tab-panel-pt: 1rem;
+}
+
+@layer components {
+
+    /* ---- Tabs list (default / underline) ---- */
+    .tabs-list {
+        display: flex;
+        align-items: center;
+        gap: var(--tabs-list-gap);
+        border-bottom: 1px solid var(--tabs-list-border);
+    }
+
+    /* ---- Individual tab (default / underline) ---- */
+    .tab {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: var(--tab-py) var(--tab-px);
+        font-size: var(--tab-font-size);
+        font-weight: var(--tab-font-weight);
+        color: var(--tab-text);
+        background: none;
+        border: none;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: color 150ms ease;
+    }
+
+    .tab:hover {
+        color: var(--tab-hover-text);
+    }
+
+    .tab:focus-visible {
+        outline: 2px solid var(--color-primary-500);
+        outline-offset: -2px;
+        border-radius: var(--radius-sm);
+    }
+
+    /* Active indicator — bottom border */
+    .tab-active {
+        color: var(--tab-active-text);
+    }
+
+    .tab-active::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--tab-active-border);
+    }
+
+    /* ---- Segmented variant ---- */
+    .tabs-list-segmented {
+        border-bottom: none;
+        width: fit-content;
+        background: var(--tabs-list-segmented-bg);
+        border-radius: var(--tabs-list-segmented-radius);
+        padding: var(--tabs-list-segmented-p);
+        gap: var(--tabs-list-segmented-gap);
+    }
+
+    .tabs-list-segmented .tab {
+        padding: var(--tab-segmented-py) var(--tab-segmented-px);
+        border-radius: var(--tab-segmented-radius);
+    }
+
+    .tabs-list-segmented .tab-active {
+        background: var(--tab-segmented-active-bg);
+        box-shadow: var(--tab-segmented-active-shadow);
+        color: var(--tab-active-text);
+    }
+
+    .tabs-list-segmented .tab-active::after {
+        display: none;
+    }
+
+    /* Segmented small */
+    .tabs-list-segmented-sm .tab {
+        font-size: var(--tab-segmented-sm-font-size);
+        padding: var(--tab-segmented-sm-py) var(--tab-segmented-sm-px);
+    }
+
+    /* ---- Pills variant ---- */
+    .tabs-list-pills {
+        border-bottom: none;
+        gap: var(--tabs-list-pills-gap);
+    }
+
+    .tabs-list-pills .tab {
+        padding: var(--tab-pills-py) var(--tab-pills-px);
+        border-radius: var(--tab-pills-radius);
+        background: var(--tab-pills-bg);
+    }
+
+    .tabs-list-pills .tab-active {
+        background: var(--tab-pills-active-bg);
+        color: var(--tab-pills-active-text);
+    }
+
+    .tabs-list-pills .tab-active::after {
+        display: none;
+    }
+
+    /* ---- Icon ---- */
+    .tab-icon {
+        width: var(--tab-icon-size);
+        height: var(--tab-icon-size);
+        flex-shrink: 0;
+    }
+
+    /* ---- Panel ---- */
+    .tab-panel {
+        display: none;
+        padding-top: var(--tab-panel-pt);
+    }
+
+    .tab-panel-active {
+        display: block;
+    }
+}

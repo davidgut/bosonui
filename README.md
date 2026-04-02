@@ -45,7 +45,7 @@ All components are available under the `boson::` namespace:
 
 ### Available Components
 
-Accordion, Avatar, Badge, Button, Card, Checkbox, Combobox, Description, Dropdown, Error, Field, Form, Heading, Icon, Img, Input, Label, Link, Listbox, Modal, Navbar, Radio, Select, Separator, Spacer, Table, Textarea, Toast.
+Accordion, Avatar, Badge, Button, Card, Checkbox, Combobox, Description, Dropdown, Error, Field, Form, Heading, Icon, Img, Input, Label, Link, Listbox, Modal, Navbar, Radio, Select, Separator, Spacer, Table, Tabs, Textarea, Toast.
 
 ### Toasts
 
@@ -213,6 +213,7 @@ el.boson.destroy();  // removes all event listeners
 | Modal | `modal` |
 | Navlist | `navlist` |
 | Sidebar | `sidebar` |
+| Tabs | `tab` |
 | Toast | `toast` |
 
 ### Turbo Compatibility
