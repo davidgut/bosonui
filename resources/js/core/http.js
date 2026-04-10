@@ -37,10 +37,11 @@ export class BosonHttp {
      * @returns {Promise<Response>}
      */
     static async get(url, options = {}) {
+        const { headers, ...rest } = options;
         return fetch(url, {
+            ...rest,
             method: 'GET',
-            headers: this.getHeaders(options.headers),
-            ...options,
+            headers: this.getHeaders(headers),
         });
     }
 
@@ -52,11 +53,12 @@ export class BosonHttp {
      * @returns {Promise<Response>}
      */
     static async post(url, body, options = {}) {
+        const { headers, ...rest } = options;
         return fetch(url, {
+            ...rest,
             method: 'POST',
-            headers: this.getHeaders(options.headers),
+            headers: this.getHeaders(headers),
             body,
-            ...options,
         });
     }
 
