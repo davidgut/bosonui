@@ -80,9 +80,9 @@ const toast = $toast.success('Done!');
 $toast.dismiss(toast);
 ```
 
-### Fetch Forms
+### Async Forms
 
-Add `fetch` to `<x-boson::form>` for JavaScript-powered submission. Response handling is automatic:
+Add `async` to `<x-boson::form>` for JavaScript-powered submission. Response handling is automatic:
 
 | Controller returns | Boson does |
 |---|---|
@@ -91,10 +91,10 @@ Add `fetch` to `<x-boson::form>` for JavaScript-powered submission. Response han
 | `422` validation response | Populates matching `<x-boson::error>` components |
 
 ```blade
-<x-boson::form fetch action="/users" method="POST">
+<x-boson::form async action="/users" method="POST">
 ```
 
-Without `fetch`, the form submits normally (Turbo handles it if installed, browser handles it otherwise).
+Without `async`, the form submits normally (Turbo handles it if installed, browser handles it otherwise).
 
 **GET forms** send form data as URL query parameters automatically.
 
@@ -109,6 +109,29 @@ return response()->json([
 ```blade
 <span data-field="team.name">Old Name</span>  {{-- updates to "Acme" --}}
 ```
+
+### Async Options (Combobox & Listbox)
+
+Combobox and Listbox support loading options asynchronously via `async="/url"`:
+
+```blade
+<x-boson::combobox name="user" async="/api/users" placeholder="Search users..." />
+
+<x-boson::listbox name="user" async="/api/users" searchable placeholder="Search users..." />
+```
+
+The endpoint should return a JSON array (or `{ data: [...] }`). Each item should have `value`/`id` and `label`/`name`/`text` keys:
+
+```json
+[{ "value": "1", "label": "John Doe" }, { "value": "2", "label": "Jane Smith" }]
+```
+
+| Prop | Default | Description |
+|------|---------|-------------|
+| `async` | — | URL to fetch options from |
+| `async:param` | `q` | Query parameter name |
+| `async:min` | `2` | Minimum characters before fetching |
+| `async:debounce` | `300` | Debounce delay in ms |
 
 ### Events
 

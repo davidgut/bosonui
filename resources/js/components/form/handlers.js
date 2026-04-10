@@ -10,7 +10,7 @@ import { APPEND_TO_ATTR, NO_RESET_ATTR, NO_CLOSE_ATTR, MODAL_ATTR, ERROR_SELECTO
  * Suppressed when the response contains update data (data.data key).
  * @param {HTMLFormElement} form
  * @param {Object} data - Parsed response data
- * @param {Response} response - The fetch Response object
+ * @param {Response} response - The HTTP Response object
  * @returns {boolean} - True if redirecting
  */
 export function handleRedirect(form, data, response) {
